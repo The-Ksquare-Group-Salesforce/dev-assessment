@@ -2,6 +2,7 @@
 fork this repository to start working in your own implementation
 Prueba SSH
 Prueba en Gitbash
+Cambio de dir
 ## Objective
 Understand your current programming level in a practical assessment with the idea of understanding better where you are in your career path, what is needed to become a better professional and how The Ksquare Group can help you to get there.
 
