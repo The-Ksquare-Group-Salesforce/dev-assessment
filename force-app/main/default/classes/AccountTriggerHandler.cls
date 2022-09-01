@@ -36,6 +36,7 @@ public with sharing class AccountTriggerHandler {
             Database.update(conList,false);
         }
 
-
+        //Update Async
+        UpdateAccContactsAsync.UpdateAccContactsAsync(accIds);
     }
 }
