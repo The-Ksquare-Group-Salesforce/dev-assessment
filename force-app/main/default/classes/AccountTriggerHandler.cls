@@ -21,14 +21,14 @@ public with sharing class AccountTriggerHandler {
     
 
         //Deciding what to approach to take
-        if(contactTotal <= 200) {UpdateAccContactsSync(accList); //Done
-        } else if (contactTotal <= 1000) {UpdateAccContactsAsync(accList);
+        if(contactTotal <= 200) {UpdateAccContactsSync.UpdateAccContactsSync(accList); //Done
+        } else if (contactTotal <= 1000) {UpdateAccContactsAsync.UpdateAccContactsAsync(accIds);
         } else {UpdateAccContactsBatch(accList);}
 
         //Update Sync
         for(Contact c : [SELECT Id, Account.PushToVendor__C FROM Contact WHERE Account.Id IN :AccIds]){
-            if(c.Account.PushToVendor__c == 'Yes') {c.PushDate__c = now();}
-            if(c.Account.PushToVender__c= 'No') {c.PushDate__c = null;}
+            if(c.Account.PushToVendor__c = 'Yes') {c.Push_Date__c = datetime.get();}
+            if(c.Account.PushToVendor__c = 'No') {c.Push_Date__c = null;}
 
             conList.add(c);
 
