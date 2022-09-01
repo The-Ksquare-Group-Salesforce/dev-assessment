@@ -3,6 +3,7 @@ public with sharing class AccountTriggerHandler {
         
         //Counting number of Contacts
         Integer contactTotal = 0;
+        List<Contact> = new List<Contact>();
 
         Set<Id> accIds = new Set<Id>();
     
@@ -14,11 +15,16 @@ public with sharing class AccountTriggerHandler {
         WHERE Account.Id
         IN: accIds 
         GROUP BY AccountId]) {
-            contactTotal +=(Integer)ar.get('ContactsPerAccount');
+            contactTotal +=(Integer)AggRe.get('ContactsPerAccount');
         }
     
-        if(contactTotal <= 200) {System.debug('<= 200');
-        } else if (contactTotal <= 1000) {System.debug('<=1k');
-        } else {System.debug('>1k');}
+
+        //Deciding what to approach to take
+        if(contactTotal <= 200) {UpdateAccContactsSync(accList);
+        } else if (contactTotal <= 1000) {UpdateAccContactsAsync(accList);
+        } else {UpdateAccContactsBatch(accList);}
+
+        //Update Sync
+        for(Contact c : [SELECT Id, Account.PushToVendor__C FROM Contact WHERE Id IN (AggRe)])
     }
 }
