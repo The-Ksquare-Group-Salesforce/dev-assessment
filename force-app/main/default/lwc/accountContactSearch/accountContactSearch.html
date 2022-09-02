@@ -1,0 +1,78 @@
+<template>
+    <div class="slds slds-p-horizontal--medium">
+
+        <br/>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-form_horizontal slds-size_1-of-3">                
+                <lightning-Input label="Contact Name" type="search" placeholder="Search" value={contactName} name="contactName" class="contactName" onchange={handleChangeAccName} autocomplete="off"></lightning-input>    
+            </div>
+        </div>
+
+        <h3>
+            <strong>
+                <span style="color:brown;">{noContacts}</span>
+            </strong>
+        </h3>        
+        <br/>
+
+        <div class="slds-grid slds-wrap">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-size_2-of-3" border="1" cellspacing="0" cellpadding="0" bordercolor="#ccc" style="border-collapse:collapse;">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Account Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={contacts} for:item="contact">
+                        <tr key={contact.Id}>
+                            <td>
+                                <a data-id={contact.Id} onclick={showContactInfo}>{contact.FirstName} {contact.LastName}</a>                            
+                            </td>
+                            <td>
+                                <lightning-formatted-email value={contact.Email}></lightning-formatted-email>
+                            </td>
+                            <td>
+                                <lightning-formatted-phone value={contact.Phone}></lightning-formatted-phone>
+                            </td>
+                            <td>{contact.Account.Name}</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+
+            <template if:true={contactInfoVisible}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-size_1-of-3" border="1" cellspacing="0" cellpadding="0" bordercolor="#ccc" style="border-collapse:collapse;">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">Contact Information</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="margin:auto; width:30%; padding:10px">
+                                    <img style="border-radius:50%; cursor:pointer" data-id={contactInfo.Id} onclick={navigateToContactDetailPage} src="http://safarirobotics.com/wp-content/uploads/2019/05/dummy-profile-pic-male1.jpg" width="100" height="100"/>
+                                </div>
+                                <br/>
+                                <span>{contactInfo.FirstName} {contactInfo.LastName}</span><br/>
+                                <span>{contactInfo.Title}</span><br/>
+                                <span>
+                                    <lightning-formatted-phone value={contactInfo.Phone}></lightning-formatted-phone>
+                                </span><br/>
+                                <span>
+                                    <lightning-formatted-email value={contactInfo.Email}></lightning-formatted-email>
+                                </span><br/>
+                                <span></span><br/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+        </div>
+        <hr/>
+        <lightning-button label="Create New Contact" size="small" onclick={createNewContact}></lightning-button>
+    </div>
+</template>
