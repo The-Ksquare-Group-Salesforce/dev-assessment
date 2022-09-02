@@ -26,7 +26,7 @@ public with sharing class AccountTriggerHandler {
         } else {UpdateAccContactsBatch(accList);}
 
         //Update Sync
-        for(Contact c : [SELECT Id, Account.PushToVendor__C FROM Contact WHERE Account.Id IN :AccIds]){
+        for(Contact c : [SELECT Id, Push_Date__c, Account.PushToVendor__C FROM Contact WHERE Account.Id IN :AccIds]){
             if(c.Account.PushToVendor__c = 'Yes') {c.Push_Date__c = datetime.get();}
             if(c.Account.PushToVendor__c = 'No') {c.Push_Date__c = null;}
 

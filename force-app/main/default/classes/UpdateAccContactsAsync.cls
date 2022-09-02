@@ -4,9 +4,9 @@ public with sharing class UpdateAccContactsAsync {
 
         List<Contact> conList = new List<Contact>();
 
-        for(Contact c : [SELECT Id, Account.PushToVendor__C FROM Contact WHERE Account.Id IN :AccIds]){
-            if(c.Account.PushToVendor__c == 'Yes') {c.Push_Date__c = now();}
-            if(c.Account.PushToVender__c == 'No') {c.Push_Date__c = null;}
+        for(Contact c : [SELECT Id, Push_Date__c, Account.PushToVendor__C FROM Contact WHERE Account.Id IN :AccIds]){
+            if(c.Account.PushToVendor__c == 'Yes') {c.Push_Date__c = System.now();}
+            if(c.Account.PushToVendor__c == 'No') {c.Push_Date__c = null;}
 
             conList.add(c);
         }
