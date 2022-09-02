@@ -8,8 +8,8 @@ public with sharing class AccountTriggerHandler {
 
         //Set to save Account Ids in the Trigger.new List
         Set<Id> accIds = new Set<Id>();
-        //Set<Id> accountsWithPushToVendorUpdated = new Set<Id>();
-        //List<Contact> contactsWithPushDateToUpdate = new List<Contact>();
+        Set<Id> accsToUpdatedWithYes = new Set<Id>();
+        Set<Id> accsToUpdatedWithNo = new Set<Id>();
         List<Contact> contactsToUpdate = new List<Contact>();
         //Integer to save the quantity of contacts to process
         Integer contactsToProcess = 0;
@@ -27,6 +27,11 @@ public with sharing class AccountTriggerHandler {
             for(Account acc: accountList)
             {
                 if (acc.Push_To_Vendor__c == 'Yes') {
+                    accsToUpdatedWithYes.add(acc.Id);
+                    accIds.add(acc.Id);
+                }
+                if (acc.Push_To_Vendor__c == 'No') {
+                    accsToUpdatedWithNo.add(acc.Id);
                     accIds.add(acc.Id);
                 }
             }
@@ -62,10 +67,17 @@ public with sharing class AccountTriggerHandler {
 
                         //If there are at less than 200 contact records to update (Synchronously).
                         if (contactsToProcess <= 200) {
-                                
-                            contactsToUpdate = [SELECT Name, Id, AccountId, Push_Date__c FROM Contact WHERE AccountId IN:accIds];
-                            for (Contact cont: contactsToUpdate) {
-                                cont.Push_Date__c = System.now();
+                            if (!accsToUpdatedWithYes.isEmpty()) {
+                                for (Contact cont: [SELECT Name, Id, AccountId, Push_Date__c FROM Contact WHERE AccountId IN:accsToUpdatedWithYes]) {
+                                    cont.Push_Date__c = System.now();
+                                    contactsToUpdate.add(cont);
+                                }
+                            }
+                            if (!accsToUpdatedWithNo.isEmpty()) {
+                                for (Contact cont: [SELECT Name, Id, AccountId, Push_Date__c FROM Contact WHERE AccountId IN:accsToUpdatedWithNo]) {
+                                    cont.Push_Date__c = Null;
+                                    contactsToUpdate.add(cont);
+                                }
                             }
                             Update contactsToUpdate;
                         }
