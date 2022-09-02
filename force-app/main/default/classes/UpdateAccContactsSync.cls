@@ -8,9 +8,10 @@ public  with sharing class UpdateAccContactsSync {
             if(c.Account.PushToVendor__c == 'No') {c.Push_Date__c = null;}
         
             conList.add(c);
-        
-            //Updating Syncronusly
-            Database.update(conList,false);
         }
+
+        //Updating Syncronusly
+        Database.update(conList,false);
+        return;
     }
 }

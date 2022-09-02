@@ -13,5 +13,6 @@ public with sharing class UpdateAccContactsAsync {
 
         //Update Async
         Database.update(conList,false);
+        return;
     }
 }

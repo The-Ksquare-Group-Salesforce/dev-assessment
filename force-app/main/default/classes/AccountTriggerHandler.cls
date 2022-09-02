@@ -1,5 +1,5 @@
 public with sharing class AccountTriggerHandler {
-    public AccountTriggerHandlerMethod(List<Account> accList) {
+    public static void AccountTriggerHandlerMethod(List<Account> accList) {
         
         //Declaring local variables
         Integer contactTotal = 0;
