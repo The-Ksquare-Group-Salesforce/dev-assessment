@@ -1,5 +1,4 @@
 trigger AccountTrigger on Account (after update) {
 
-    if(Trigger.isUpdate){AccountTriggerHandler.AccountTriggerHandler(Trigger.new);}
-
+    if(Trigger.isUpdate){AccountTriggerHandler.AccountTriggerHandlerMethod(Trigger.new);}
 }

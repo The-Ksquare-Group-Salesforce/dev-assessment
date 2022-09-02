@@ -1,5 +1,5 @@
 public with sharing class AccountTriggerHandler {
-    public AccountTriggerHandler(List<Account> accList) {
+    public AccountTriggerHandlerMethod(List<Account> accList) {
         
         //Declaring local variables
         Integer contactTotal = 0;
@@ -21,8 +21,8 @@ public with sharing class AccountTriggerHandler {
     
 
         //Deciding what to approach to take
-        if(contactTotal <= 200) {UpdateAccContactsSync.UpdateAccContactsSync(accIds); //Done
-        } else if (contactTotal <= 1000) {UpdateAccContactsAsync.UpdateAccContactsAsync(accIds); //Done
-        } else {UpdateAccContactsBatch(accList);}
+        if(contactTotal <= 200) {UpdateAccContactsSync.UpdateAccContactsSyncMethod(accIds);
+        } else if (contactTotal <= 1000) {UpdateAccContactsAsync.UpdateAccContactsAsyncMethod(accIds);
+        } else {System.debug('Batchable');}
     }
 }
