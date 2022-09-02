@@ -3,11 +3,14 @@
     <custom>false</custom>
     <fieldPermissions>
         <editable>false</editable>
-        <field>User.Assessment_Complete__c</field>
+        <field>Contact.Push_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>User-User Layout</layout>
+        <layout>Account-Account Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-Contact Layout</layout>
     </layoutAssignments>
     <userLicense>Chatter External</userLicense>
     <userPermissions>
