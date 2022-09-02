@@ -15,6 +15,11 @@
 		<name>CustomField</name>
 	</types>
 	<types>
+		<members>Account-Account Layout</members>
+		<members>Contact-Contact Layout</members>
+		<name>Layout</name>
+	</types>
+	<types>
 		<members>*</members>
 		<name>LightningComponentBundle</name>
 	</types>

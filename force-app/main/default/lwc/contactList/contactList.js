@@ -12,14 +12,17 @@ export default class ContactList extends NavigationMixin(LightningElement) {
     @track data;
     @track selectedContact;
 
-    @api sortedDirection = 'asc';
-    @api sortedBy = 'Name';
-    @api searchKey = '';
+    sortedDirection = 'asc';
+    sortedBy = 'Name';
+    searchKey = '';
     @api recordId;
 
     showNextButton = false;
     showPreviousButton = true;
     result;
+    nameSortIcon = "utility:arrowdown"
+    emailSortIcon = "utility:arrowup"
+    phoneSortIcon = "utility:arrowup"
 
     page = 1;
     items = [];
@@ -29,7 +32,8 @@ export default class ContactList extends NavigationMixin(LightningElement) {
     endingRecord = 0;
     pageSize = 5;
     totalRecordCount = 0;
-    totalPage = 0;
+    totalPage = 1;
+
 
     get recordsOptions() {
         return [
@@ -46,6 +50,12 @@ export default class ContactList extends NavigationMixin(LightningElement) {
         this.page = 1;
         this.displayRecordPerPage(1);
         this.totalPage = Math.ceil(this.totalRecordCount / this.pageSize);
+        if (this.totalPage === 1) {
+            this.showNextButton = true;
+            this.showPreviousButton = true;
+        } else {
+            this.showNextButton = false;
+        }
     }
 
     @wire(getRelatedContactList, { searchKey: '$searchKey', sortBy: '$sortedBy', sortDirection: '$sortedDirection', accId: '$recordId' })
@@ -111,8 +121,9 @@ export default class ContactList extends NavigationMixin(LightningElement) {
     }
 
     sortColumns(e) {
-        this.sortedBy = e.detail.fieldName;
-        this.sortedDirection = e.detail.sortDirection;
+        this.toggleSortDirection(e.target);
+        this.sortedBy = e.target.value;
+        this.sortedDirection = e.target.dataset.direction;
         return refreshApex(this.result);
     }
 
@@ -120,8 +131,8 @@ export default class ContactList extends NavigationMixin(LightningElement) {
         if (e.target.value.length === 0) this.searchKey = '';
         if (e.target.value.length >= 3 || e.keyCode === 13) {
             this.searchKey = e.target.value;
-            return refreshApex(this.result);
         }
+        return refreshApex(this.result);
     }
 
     handleSearch() {
@@ -172,6 +183,51 @@ export default class ContactList extends NavigationMixin(LightningElement) {
 
     closeHandler() {
         this.dispatchEvent(new CloseActionScreenEvent());
+    }
+
+    toggleSortDirection(button) {
+        switch (button.value) {
+            case 'Name': {
+                if (this.nameSortIcon === 'utility:arrowdown') {
+                    this.nameSortIcon = 'utility:arrowup';
+                    button.dataset.direction = 'desc';
+                } else {
+                    this.nameSortIcon = 'utility:arrowdown'
+                    button.dataset.direction = 'asc';
+                }
+                this.emailSortIcon = 'utility:arrowup';
+                this.phoneSortIcon = 'utility:arrowup';
+                break;
+            }
+            case 'Email': {
+                if (this.emailSortIcon === 'utility:arrowdown') {
+                    this.emailSortIcon = 'utility:arrowup';
+                    button.dataset.direction = 'asc';
+                } else {
+                    this.emailSortIcon = 'utility:arrowdown'
+                    button.dataset.direction = 'desc';
+                }
+                this.nameSortIcon = 'utility:arrowup';
+                this.phoneSortIcon = 'utility:arrowup';
+                break;
+            }
+            case 'Phone': {
+                if (this.phoneSortIcon === 'utility:arrowdown') {
+                    this.phoneSortIcon = 'utility:arrowup';
+                    button.dataset.direction = 'asc';
+                } else {
+                    this.phoneSortIcon = 'utility:arrowdown'
+                    button.dataset.direction = 'desc';
+                }
+                this.emailSortIcon = 'utility:arrowup';
+                this.nameSortIcon = 'utility:arrowup';
+                break;
+            }
+            default: {
+                console.log('default');
+
+            }
+        }
     }
 
 }

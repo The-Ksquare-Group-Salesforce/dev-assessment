@@ -20,13 +20,24 @@
                 <thead>
                     <tr>
                         <th>
-                            <div class="slds-truncate"> Name</div>
+                            <div class="slds-truncate"> Name <lightning-button-icon class="icon" value="Name"
+                                    data-direction="asc" onclick={sortColumns} size="xx-small" icon-name={nameSortIcon}>
+                                </lightning-button-icon>
+                            </div>
                         </th>
                         <th>
-                            <div class="slds-truncate"> Email </div>
+                            <div class="slds-truncate"> Email <lightning-button-icon value="Email" class="icon"
+                                    data-direction="asc" onclick={sortColumns} size="xx-small"
+                                    icon-name={emailSortIcon}>
+                                </lightning-button-icon>
+                            </div>
                         </th>
                         <th>
-                            <div class="slds-truncate"> Phone</div>
+                            <div class="slds-truncate"> Phone <lightning-button-icon value="Phone" class="icon"
+                                    data-direction="asc" onclick={sortColumns} size="xx-small"
+                                    icon-name={phoneSortIcon}>
+                                </lightning-button-icon>
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -72,10 +83,11 @@
                     <span>
                         <template if:true={selectedContact}>
                             <template if:true={selectedContact.Picture__c}>
-                                <img onclick={handleImageClick} width="150px" src={selectedContact.Picture__c}>
+                                <img class="img" onclick={handleImageClick} width="150px"
+                                    src={selectedContact.Picture__c}>
                             </template>
                             <template if:false={selectedContact.Picture__c}>
-                                <img style="cursor:pointer" onclick={handleImageClick} width="150px"
+                                <img class="img" onclick={handleImageClick} width="150px"
                                     src="https://www.salesforce.com/content/dam/sfdc-docs/www/resources/campaign-assets/9-reasons/images/salesforce-logo-cloud.png">
                             </template>
                             <p>{selectedContact.Name}</p>
@@ -99,10 +111,12 @@
     <div
         class="slds-grid slds-var-p-top_medium  slds-var-p-left_medium  slds-var-p-right_medium slds-var-p-bottom_medium slds-grid_align-spread">
         <div>
-            <button onclick={closeHandler}>Close</button>
+            <button class="slds-button  slds-button_text-destructive " label="Close"
+                onclick={closeHandler}>Close</button>
         </div>
         <div>
-            <button onclick={createContactHandler}>Create New Contact</button>
+            <button class="slds-button slds-button_neutral" label="Create New Contact"
+                onclick={createContactHandler}>Create New Contact</button>
         </div>
     </div>
 </template>

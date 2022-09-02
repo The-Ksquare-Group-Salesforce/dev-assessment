@@ -11,7 +11,6 @@ public with sharing class ContactHelper {
         if( sortBy != '' && sortBy != null){
             query += ' ORDER BY ' +  sortBy + ' ' + sortDirection;
         }
-        system.debug(Database.query(query));
         return Database.query(query);
     }
 }
