@@ -12,7 +12,12 @@
 		<members>Account.PushtoVendor__c</members>
 		<members>Contact.Picture__c</members>
 		<members>Contact.Push_Date__c</members>
+		<members>User.Assessment_Complete__c</members>
 		<name>CustomField</name>
+	</types>
+	<types>
+		<members>Assessment_Flow</members>
+		<name>Flow</name>
 	</types>
 	<types>
 		<members>Account-Account Layout</members>
