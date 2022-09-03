@@ -40,6 +40,6 @@ public class UpdateAccContactsSyncTest {
         UpdateAccContactsSync.UpdateAccContactsSyncMethod(accIds);
         Test.stopTest();
 
-        System.assertEquals(15, [SELECT Push_Date__c FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
+        System.assertEquals(15, [SELECT COUNT() FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
     }
 }
