@@ -1,12 +1,12 @@
 @isTest
-public class UpdateAccContactsBatchTest {
+public with sharing class UpdateAccContactsAsyncTest {
 
-    @testSetup
+    @TestSetup
     static void setup(){
         List<Account> testAccList = new List<Account>();
 
         //inserting Accounts
-        for(Integer i = 0; i < 500; i++){
+        for(Integer i = 0; i < 1005; i++){
             Account acc = new Account(Name = 'Test Account' + i);
             testAccList.add(acc);
         }
@@ -19,11 +19,11 @@ public class UpdateAccContactsBatchTest {
                 testConList.add(new Contact (LastName = acc.Name + 'Contact' + j, AccountId = acc.Id));
             }
         }
-        insert testConList;
+        insert testConList;        
     }
 
     @isTest
-    public static void UpdateAccContactsBatchTestMethod() {
+    public UpdateAccContactsAsyncTestMethod() {
         Set<Id> accIds = new Set<Id>();
         List<Account> accList = [SELECT Id, PushToVendor__c FROM Account WHERE Name LIKE '%Test%'];
        
@@ -39,6 +39,6 @@ public class UpdateAccContactsBatchTest {
         Id contactQueue = System.enqueueJob(async);
         Test.stopTest();
 
-        System.assertEquals(1500, [SELECT COUNT() FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
+        System.assertEquals(3015, [SELECT COUNT() FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
     }
 }
