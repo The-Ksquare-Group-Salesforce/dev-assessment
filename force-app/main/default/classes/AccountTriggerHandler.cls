@@ -19,12 +19,12 @@ public with sharing class AccountTriggerHandler {
             contactTotal +=(Integer)AggRe.get('ContactsPerAccount');
         }
     
-
         //Deciding what to approach to take
         if(contactTotal <= 200) {UpdateAccContactsSync.UpdateAccContactsSyncMethod(accIds);
         } else if (contactTotal <= 1000) {UpdateAccContactsAsync.UpdateAccContactsAsyncMethod(accIds);
         } else {
             UpdateAccContactsBatch uacb = new UpdateAccContactsBatch(accIds);
-            Database.executeBatch(uacb, 150);}
+            Database.executeBatch(uacb, 150);
+        }
     }
 }
