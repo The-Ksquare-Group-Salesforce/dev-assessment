@@ -23,7 +23,7 @@ public with sharing class UpdateAccContactsAsyncTest {
     }
 
     @isTest
-    public UpdateAccContactsAsyncTestMethod() {
+    public static void UpdateAccContactsAsyncTestMethod() {
         Set<Id> accIds = new Set<Id>();
         List<Account> accList = [SELECT Id, PushToVendor__c FROM Account WHERE Name LIKE '%Test%'];
        
