@@ -6,7 +6,7 @@ public with sharing class UpdateAccContactsAsyncTest {
         List<Account> testAccList = new List<Account>();
 
         //inserting Accounts
-        for(Integer i = 0; i < 500; i++){
+        for(Integer i = 0; i < 300; i++){
             Account acc = new Account(Name = 'Test Account' + i);
             testAccList.add(acc);
         }
@@ -24,6 +24,7 @@ public with sharing class UpdateAccContactsAsyncTest {
 
     @isTest
     public static void UpdateAccContactsAsyncTestMethod() {
+        
         Set<Id> accIds = new Set<Id>();
         List<Account> accList = [SELECT Id, PushToVendor__c FROM Account WHERE Name LIKE '%Test%'];
        
@@ -31,14 +32,12 @@ public with sharing class UpdateAccContactsAsyncTest {
             acc.PushTovendor__c = 'Yes';
         }
 
-        Database.update(accList,false);
-        accIds = (new Map<Id,Account>(accList)).keySet();
-
         Test.startTest();
-        UpdateAccContactsAsync async = new UpdateAccContactsAsync(accIds);
-        Id contactQueue = System.enqueueJob(async);
+        Database.update(accList,false);
         Test.stopTest();
 
-        System.assertEquals(1500, [SELECT COUNT() FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
+        accIds = (new Map<Id,Account>(accList)).keySet();
+
+        System.assertEquals(900, [SELECT COUNT() FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
     }
 }

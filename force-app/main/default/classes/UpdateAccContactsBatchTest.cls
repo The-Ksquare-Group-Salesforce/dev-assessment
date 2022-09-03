@@ -6,7 +6,7 @@ public class UpdateAccContactsBatchTest {
         List<Account> testAccList = new List<Account>();
 
         //inserting Accounts
-        for(Integer i = 0; i < 1005; i++){
+        for(Integer i = 0; i < 50; i++){
             Account acc = new Account(Name = 'Test Account' + i);
             testAccList.add(acc);
         }
@@ -31,14 +31,13 @@ public class UpdateAccContactsBatchTest {
             acc.PushTovendor__c = 'Yes';
         }
 
-        Database.update(accList,false);
-        accIds = (new Map<Id,Account>(accList)).keySet();
-
         Test.startTest();
         UpdateAccContactsBatch batch = new UpdateAccContactsBatch(accIds);
         Id contactBatch = Database.executeBatch(batch, 150);
         Test.stopTest();
 
-        System.assertEquals(3015, [SELECT COUNT() FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
+        accIds = (new Map<Id,Account>(accList)).keySet();
+
+        System.assertEquals(100, [SELECT COUNT() FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
     }
 }
