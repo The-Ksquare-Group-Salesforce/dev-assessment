@@ -21,10 +21,12 @@ public with sharing class AccountTriggerHandler {
     
         //Deciding what to approach to take
         if(contactTotal <= 200) {UpdateAccContactsSync.UpdateAccContactsSyncMethod(accIds);
-        } else if (contactTotal <= 1000) {UpdateAccContactsAsync.UpdateAccContactsAsyncMethod(accIds);
+        } else if (contactTotal <= 1000) {
+            UpdateAccContactsAsync async = new UpdateAccContactsAsync(accIds);
+            Id contactQueue = System.enqueueJob(async);
         } else {
-            UpdateAccContactsBatch uacb = new UpdateAccContactsBatch(accIds);
-            Database.executeBatch(uacb, 150);
+            UpdateAccContactsBatch batch = new UpdateAccContactsBatch(accIds);
+            Id contactBatch = Database.executeBatch(batch, 150);
         }
     }
 }

@@ -1,6 +1,12 @@
-public with sharing class UpdateAccContactsAsync {
-    @future
-    public static void UpdateAccContactsAsyncMethod(Set<Id> accIds) {
+public with sharing class UpdateAccContactsAsync  implements Queueable{
+
+    Set<Id> accIds = new Set<Id>();
+
+    public UpdateAccContactsAsync(Set<Id> accIdsParam){
+        accIds = accIdsParam;
+    }
+
+    public void execute(QueueableContext context) {
 
         List<Contact> conList = new List<Contact>();
 
