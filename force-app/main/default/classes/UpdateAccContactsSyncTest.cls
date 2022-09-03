@@ -24,7 +24,7 @@ public class UpdateAccContactsSyncTest {
     }
 
     @isTest
-    public static void UpdateAccContactsSyncTestMethod() {
+    public UpdateAccContactsSyncTest() {
 
         Set<Id> accIds = new Set<Id>();
         List<Account> accList = [SELECT Id, PushToVendor__c FROM Account WHERE Name LIKE '%Test%'];
@@ -37,7 +37,7 @@ public class UpdateAccContactsSyncTest {
         accIds = (new Map<Id,Account>(accList)).keySet();
 
         Test.startTest();
-        UpdateAccContactsSync.UpdateAccContactsSyncMethod(accIds);
+        Database.update(accList,false);
         Test.stopTest();
 
         System.assertEquals(15, [SELECT COUNT() FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
