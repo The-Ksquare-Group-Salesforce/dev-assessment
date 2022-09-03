@@ -7,20 +7,6 @@ const columns = [
   { label: 'Email', fieldName:'Email', type: 'email'},
   { label: 'Phone', fieldName: 'Phone', type: 'phone' }
 ];
-// const data = [
-//   {
-//       id: 'a',
-//       Name: 'Abel',
-//       Email: '1234@email.com',
-//       Phone: '2352235235',
-//   },
-//   {
-//     id: 'b',
-//     Name: 'Fernando',
-//     Email: '12345@email.com',
-//     Phone: '2352235235',
-//   },
-// ];
 export default class ContactSearch extends LightningElement {
   @api recordId;
   @track searchKey = '';
