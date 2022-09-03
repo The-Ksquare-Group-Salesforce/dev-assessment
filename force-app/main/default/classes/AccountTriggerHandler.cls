@@ -81,16 +81,16 @@ public with sharing class AccountTriggerHandler {
                             }
                             Update contactsToUpdate;
                         }
-                        //If there are more than 200 and less than 1000 contact records to update.
+                        //If there are more than 200 and less than 1000 contact records to update in one-time process.
                         else if (contactsToProcess > 200 && contactsToProcess <= 1000) {
                         
-
+                            System.enqueueJob(new UpdateContactsWithQueueableApex(accsToUpdatedWithYes,accsToUpdatedWithNo));
 
                         }
                         //If there are more than 1000 contact records to update.
                         else if (contactsToProcess > 1000) {
                         
-
+                            Database.executeBatch(new UpdateContactsWithBatchableApex(accIds,accsToUpdatedWithYes,accsToUpdatedWithNo), 150);
 
                         }
                 //Logic to process contact records--------------------------------
