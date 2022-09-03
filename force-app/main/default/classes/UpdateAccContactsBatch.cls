@@ -1,18 +1,16 @@
-public with sharing class UpdateAccContactsBatch implements Database.Batchable<Contact> {
+public with sharing class UpdateAccContactsBatch implements Database.Batchable<SObject> {
 
     Set<Id> accIds = new Set<Id>();
 
-    public UpdateAccContactsBatch(Set<Id> accIdsParam)
-    {
+    public UpdateAccContactsBatch(Set<Id> accIdsParam){
         accIds = accIdsParam;
     }
 
-    public Database.QueryLocator start(Database.BatchableContext BC){
-        String query = 'SELECT Id, Push_Date__c, Account.PushToVendor__c FROM Contact WHERE Account.Id IN :accIds';
-        return Database.getQueryLocator(query);
+    public Database.QueryLocator start(Database.BatchableContext bc){
+        return Database.getQueryLocator('SELECT Id, Push_Date__c, Account.PushToVendor__c FROM Contact WHERE Account.Id IN :accIds');
     }
 
-    public void execute(Database.BatchableContext BC, List<Contact> scope){
+    public void execute(Database.BatchableContext bc, List<Contact> scope){
 
         List<Contact> conList = new List<Contact>();
 
@@ -25,7 +23,5 @@ public with sharing class UpdateAccContactsBatch implements Database.Batchable<C
         Database.update(conList,false);
     }
 
-    public void finish(Database.BatchableContext BC){
-
-    }
+    public void finish(Database.BatchableContext bc){}
 }
