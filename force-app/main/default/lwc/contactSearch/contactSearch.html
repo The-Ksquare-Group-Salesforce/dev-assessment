@@ -1,12 +1,20 @@
 <template>
-  <div>
-    <h1> Contact Search </h1>
-  </div>
+  <lightning-card title="Contact Search">
+    <lightning-layout>
+      <lightning-layout-item flexibility="auto" padding="around-small">
+            <lightning-input label="Enter Contact Name" type="search"  onchange={searchContact} value={searchKey}></lightning-input>
+
+                <br/>
   <div style="height: 300px;">
+    <template if:true={contacts}>
       <lightning-datatable
               key-field="Id"
-              data={contacts.data}
+              data={contacts}
               columns={columns}>
       </lightning-datatable>
-  </div>
+    </template>
+    </div>
+      </lightning-layout-item>
+    </lightning-layout>
+  </lightning-card>
 </template>
