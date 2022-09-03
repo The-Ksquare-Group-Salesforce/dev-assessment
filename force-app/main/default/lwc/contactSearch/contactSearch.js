@@ -29,11 +29,4 @@ export default class ContactSearch extends LightningElement {
       this.contacts = undefined;
     }
   }
-  // connectedCallback(){
-  //   getContacts({accID: this.recordId}).then(contacts => {
-  //     //console.log(`%c ${JSON.stringify(contacts,null,2)}`, 'color:green; font-weight:bold; font-size:14px;');
-  //     console.log(contacts);
-  //     this.count = contacts;
-  //   });
-  // }
 }
