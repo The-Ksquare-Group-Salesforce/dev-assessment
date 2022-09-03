@@ -33,7 +33,7 @@ export default class ContactSearch extends LightningElement {
     }
   }
   @wire(getContacts, {contactName: '$searchKey', accountId: '$recordId'})
-  wiredContacts({data, error}){
+  wiredContacts({ data, error }){
     if(data){
       this.contacts = data;
       this.error = undefined;
