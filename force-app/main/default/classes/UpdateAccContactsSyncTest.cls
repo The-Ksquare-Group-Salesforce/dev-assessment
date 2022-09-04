@@ -24,7 +24,7 @@ public class UpdateAccContactsSyncTest {
     }
 
     @isTest
-    public UpdateAccContactsSyncTest() {
+    public static void UpdateAccContactsSyncTestMethod() {
 
         Set<Id> accIds = new Set<Id>();
         List<Account> accList = [SELECT Id, PushToVendor__c FROM Account WHERE Name LIKE '%Test%'];
