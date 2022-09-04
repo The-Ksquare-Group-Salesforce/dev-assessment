@@ -7,8 +7,6 @@ public with sharing class AccountTriggerHandler {
 
         //Counting number of Contacts
         Set<Id> accIds = new Set<Id>();
-
-        System.debug('acclist:' + accList.size());
     
         for(Account a : accList) {accIds.add(a.Id);}
         
@@ -21,17 +19,12 @@ public with sharing class AccountTriggerHandler {
             contactTotal +=(Integer)AggRe.get('ContactsPerAccount');
         }
 
-        System.debug('contactTotal');
-        System.debug(contactTotal);
-
         //Deciding what to approach to take
         if(contactTotal <= 200) {UpdateAccContactsSync.UpdateAccContactsSyncMethod(accIds);
         } else if (contactTotal > 200 && contactTotal <= 1000) {
-            System.debug('async');
             UpdateAccContactsAsync async = new UpdateAccContactsAsync(accIds);
             Id contactQueue = System.enqueueJob(async);
         } else if (contactTotal > 1000) {
-            System.debug('batch');
             UpdateAccContactsBatch batch = new UpdateAccContactsBatch(accIds);
             if(Test.isRunningTest()){
                 Id contactBatch = Database.executeBatch(batch, 1500);
