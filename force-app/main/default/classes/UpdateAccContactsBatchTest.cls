@@ -6,7 +6,7 @@ public class UpdateAccContactsBatchTest {
         List<Account> testAccList = new List<Account>();
 
         //inserting Accounts
-        for(Integer i = 0; i < 400; i++){
+        for(Integer i = 0; i < 100; i++){
             Account acc = new Account(Name = 'Test Account' + i);
             testAccList.add(acc);
         }
@@ -15,7 +15,7 @@ public class UpdateAccContactsBatchTest {
         //inserting Contancts
         List<Contact> testConList = new List<Contact>();
         for(Account acc : testAccList){
-            for(Integer j = 0; j < 3; j++){
+            for(Integer j = 0; j < 15; j++){
                 testConList.add(new Contact (LastName = acc.Name + 'Contact' + j, AccountId = acc.Id));
             }
         }
@@ -32,12 +32,12 @@ public class UpdateAccContactsBatchTest {
         }
 
         Test.startTest();
-        UpdateAccContactsBatch batch = new UpdateAccContactsBatch(accIds);
-        Id contactBatch = Database.executeBatch(batch, 1200);
+        Database.update(accList,false);
         Test.stopTest();
 
         accIds = (new Map<Id,Account>(accList)).keySet();
 
-        System.assertEquals(1200, [SELECT COUNT() FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
+        System.assertEquals(1500, [SELECT COUNT() FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
     }
 }
+ 

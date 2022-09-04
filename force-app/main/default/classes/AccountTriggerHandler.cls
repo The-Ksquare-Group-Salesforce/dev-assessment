@@ -33,7 +33,11 @@ public with sharing class AccountTriggerHandler {
         } else if (contactTotal > 1000) {
             System.debug('batch');
             UpdateAccContactsBatch batch = new UpdateAccContactsBatch(accIds);
-            Id contactBatch = Database.executeBatch(batch, 150);
+            if(Test.isRunningTest()){
+                Id contactBatch = Database.executeBatch(batch, 1500);
+            } else {
+                Id contactBatch = Database.executeBatch(batch, 150);
+            }
         }
     }
 }
