@@ -6,7 +6,7 @@ public class UpdateAccContactsBatchTest {
         List<Account> testAccList = new List<Account>();
 
         //inserting Accounts
-        for(Integer i = 0; i < 50; i++){
+        for(Integer i = 0; i < 400; i++){
             Account acc = new Account(Name = 'Test Account' + i);
             testAccList.add(acc);
         }
@@ -33,11 +33,11 @@ public class UpdateAccContactsBatchTest {
 
         Test.startTest();
         UpdateAccContactsBatch batch = new UpdateAccContactsBatch(accIds);
-        Id contactBatch = Database.executeBatch(batch, 150);
+        Id contactBatch = Database.executeBatch(batch, 1200);
         Test.stopTest();
 
         accIds = (new Map<Id,Account>(accList)).keySet();
 
-        System.assertEquals(100, [SELECT COUNT() FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
+        System.assertEquals(1200, [SELECT COUNT() FROM Contact WHERE AccountId IN :accIds AND Push_Date__c != NULL]);
     }
 }
