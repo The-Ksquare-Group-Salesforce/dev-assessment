@@ -16,16 +16,8 @@
         Test.startTest();
         	UpdateContacts_Batch c = new UpdateContacts_Batch(contactIds, testDate);
         	Database.executeBatch(c);
-        	
         Test.stopTest();
-        
         List<Contact> updatedContacts = [SELECT Id, Push_Date__c, CreatedDate, LastModifiedDate FROM Contact WHERE Account.Name='Test account'];
-        Contact example = updatedContacts[0];
-        System.debug(example.CreatedDate);
-        System.debug(example.LastModifiedDate);
-        
-        //System.assert(updatedContacts[0].Push_Date__c == testDate);
-        
-        System.assertEquals(testDate, updatedContacts[0].Push_Date__c);
+        System.assertEquals(testDate, updatedContacts[0].Push_Date__c, 'Push_Date__c field value should be testDate');
     }
 }
