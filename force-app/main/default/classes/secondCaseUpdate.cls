@@ -7,7 +7,8 @@ public class secondCaseUpdate implements Database.Batchable<sObject>, Database.S
     }
 
     public Database.QueryLocator start(Database.BatchableContext bc){
-        return Database.getQueryLocator([select id, Push_Date__c from Contact where accountId in: ContactsIds]);   
+        String query = 'Select id, Push_Date__c from Contact where accountId in: ContactsIds'+ (Test.isRunningTest() ? 'Limit 150':'');
+        return Database.getQueryLocator(query);   
     }
     
 
