@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Contact Search">
+            <lightning-layout>
+                <lightning-layout-item size="3" padding="around-small">
+                    <span>Contact Name:</span>
+                </lightning-layout-item>
+                <lightning-layout-item size="9" padding="around-small">
+                    <lightning-input variant="label-hidden" placeholder="Search..." value={searchTxt} onchange={handleTxtChange}></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+        <div class="datatable-container">
+            <lightning-datatable key-field="Id" data={contacts} columns={columns} enable-infinite-loading={isMoreRecords}
+                onloadmore={handleLoadMoreData} is-loading={isLoading} hide-checkbox-column></lightning-datatable>
+        </div>
+    </lightning-card>
+</template>
