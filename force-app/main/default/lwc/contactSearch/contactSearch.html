@@ -1,19 +1,46 @@
 <template>
   <lightning-card title="Contact Search">
+    <lightning-layout horizontal-align="space" vertical-align="end">
+      <lightning-layout-item padding="horizontal-medium" size="8">
+        <lightning-input label="Enter Contact Name" type="search" onchange={searchContact} value={searchKey}>
+        </lightning-input>
+      </lightning-layout-item>
+      <!--<div class=”slds-clearfix”>
+        <div class="slds-float_right">-->
+          <lightning-layout-item padding="horizontal-medium" size="4">
+            <lightning-button variant="brand" label="Search" title="Primary action" onclick={handleClick}>
+            </lightning-button>
+          </lightning-layout-item>
+        <!--</div>
+      </div>-->
+      <br />
+    </lightning-layout>
     <lightning-layout>
-      <lightning-layout-item flexibility="auto" padding="around-small">
-            <lightning-input label="Enter Contact Name" type="search"  onchange={searchContact} value={searchKey}></lightning-input>
+      <lightning-layout-item padding="around-small" size="8">
+        <template if:true={showTable}>
+          <div style="height: 200px">
+          <lightning-datatable
+          key-field="Id"
+          data={contacts}
+          columns={columns}
+          onrowaction={handleRowAction}
+          enable-infinite-loading
+          onloadmore={loadMoreData}
+          hide-checkbox-column="true"
+          load-more-offset="5">
+          </lightning-datatable>
+        </div>
+        </template>
+      </lightning-layout-item>
 
-                <br/>
-  <div style="height: 300px;">
-    <template if:true={contacts}>
-      <lightning-datatable
-              key-field="Id"
-              data={contacts}
-              columns={columns}>
-      </lightning-datatable>
-    </template>
-    </div>
+      <lightning-layout-item padding="around-small" size="4">
+        <template if:true={showInfo}>
+          <img src={profilePic} width="100" height="100" />
+          <p>{name}</p>
+          <p>{title}</p>
+          <p>{phone}</p>
+          <p>{email}</p>
+        </template>
       </lightning-layout-item>
     </lightning-layout>
   </lightning-card>
