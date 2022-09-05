@@ -16,6 +16,7 @@ public class AccountTriggerHelper {
         } else if (contactCount > 200 && contactCount <= 1000) {
             // Total contact count greater than 200 and less than or equal to 1000
             // Use a one-time process to update the records
+            Database.executeBatch(new UpdateContacts_Batch(contactIds, pushDate), 1000);
             
         } else {
             // Total contact count less than or equal to 200

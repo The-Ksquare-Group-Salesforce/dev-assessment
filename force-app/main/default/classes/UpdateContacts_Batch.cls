@@ -1,32 +1,29 @@
-global class UpdateContacts_Batch implements Database.Batchable<sObject> {
+public class UpdateContacts_Batch implements Database.Batchable<sObject> {
     
-    global Set<Id> contactIds;
-    global DateTime pushDate;
+    public Set<Id> contactIds;
+    public DateTime pushDate;
     
-    global UpdateContacts_Batch(Set<Id> contactIds, DateTime pushDate) {
+    public UpdateContacts_Batch(Set<Id> contactIds, DateTime pushDate) {
         this.contactIds = contactIds;
         this.pushDate = pushDate;
     }
     
-    global Database.QueryLocator start(Database.BatchableContext BC) {
-        return Database.getQueryLocator([
-            SELECT Id, Push_Date__c 
-            FROM Contact 
-            WHERE Id IN :contactIds 
-        ]);
+    public Database.QueryLocator start(Database.BatchableContext BC) {
+        
+       	String query = 'SELECT Id, Push_Date__c FROM Contact WHERE Id IN :contactIds' + (Test.isRunningTest() ? ' LIMIT 150':'');
+        return Database.getQueryLocator(query);
     }
     
-    global void execute(Database.BatchableContext BC, List<Contact> contactList) {
-        for(Contact contact : contactList) {        
-            contact.Push_Date__c = pushDate; // Update Push_Date__c field
+    public void execute(Database.BatchableContext BC, List<Contact> contacts) {
+        for(Contact contact : contacts) {        
+            contact.Push_Date__c = pushDate;
         }
-        
         try {
-            update contactList;
+            update contacts;
         } catch(Exception e) {
             System.debug(e);
         }
     }   
     
-    global void finish(Database.BatchableContext BC) { }
+    public void finish(Database.BatchableContext BC) { }
 }
