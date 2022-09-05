@@ -1,0 +1,14 @@
+<template>
+
+    <template if:true={contactList}>
+        <lightning-input type="search" onchange={handleSearchTermChange} variant="label-hidden"
+            class="slds-var-m-bottom_small" label="Search" placeholder="Search for contacts" value={searchTerm}>
+        </lightning-input>
+
+        <lightning-datatable key-field="id" data={contactList} columns={columns}>
+            <template if:false={displayResults}>
+            </template>
+        </lightning-datatable>
+
+    </template>
+</template>
