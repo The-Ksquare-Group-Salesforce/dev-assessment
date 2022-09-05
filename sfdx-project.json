@@ -5,7 +5,7 @@
       "default": true
     }
   ],
-  "name": "dev-assessment",
+  "name": "Assesment",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "55.0"
