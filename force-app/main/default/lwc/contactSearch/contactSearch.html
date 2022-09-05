@@ -1,0 +1,27 @@
+<template>
+    <h1>Contact Search</h1>
+   <div><lightning-input onchange={handleUpdateFilter} value={filter} type="text" label="Search by Name"></lightning-input>
+    <!-- <lightning-button variant="brand" label="Search" title="Search" onclick={handleSearch} class="slds-m-left_x-small"></lightning-button> -->
+    
+</div>
+   <div class="slds-color__background_gray-1 slds-color__border_gray-12">
+    Contact Count : {contacts.length}
+</div>
+<div>
+    <lightning-datatable key-field="Id" data={contacts} columns={contactColumns} load-more-offset="10"
+    onloadmore={handleLoadMore} enable-infinite-loading hide-checkbox-column show-row-number-column>
+    </lightning-datatable>
+
+    <lightning-record-view-form
+    object-api-name="Contact"
+    record-id={selecteccontact}>
+        <div class="slds-box">
+            <lightning-output-field field-name="Name"> </lightning-output-field>
+            <lightning-output-field field-name="Email">
+            <lightning-output-field field-name="Phone"></lightning-output-field>
+            </lightning-output-field>
+        </div>
+    </lightning-record-view-form>
+</div>
+    <lightning-button variant="base" label="Create New" title="Create Contact" onclick={handleNewContact} class="slds-m-left_x-small"></lightning-button>
+</template>
