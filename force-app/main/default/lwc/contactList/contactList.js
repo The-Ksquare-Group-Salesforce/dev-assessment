@@ -166,7 +166,8 @@ export default class ContactList extends NavigationMixin(LightningElement) {
     createContactHandler() {
         const defaultValues = encodeDefaultFieldValues({
             FirstName: 'Salesforce',
-            LastName: 'Salesforce'
+            LastName: 'Salesforce',
+            AccountId: this.recordId
         })
 
         this[NavigationMixin.Navigate]({
