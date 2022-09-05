@@ -1,0 +1,14 @@
+Hello Mr.{!User.Name},
+<p>
+<h2>The Assessment is done:</h2>
+</p>
+<p>
+   <b>Username:</b> frangel@assesmentksquaregroup.com
+</p>
+<p>
+   <b>Date of Completion:</b> {!Today}
+</p>
+<p>
+   <b>Github:</b> https://github.com/frangelhernandez/dev-assessment
+</p>
+</p>
