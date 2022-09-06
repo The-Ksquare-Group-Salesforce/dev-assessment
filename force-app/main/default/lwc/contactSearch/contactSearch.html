@@ -1,0 +1,18 @@
+<template>
+    <lightning-card>
+        <div class="searcher-container">
+            <lightning-input type="search" label="Contact Name" placeholder="Search Name" onchange={handleInputChange} onkeypress={handleEnter} variant="label-inline"></lightning-input>
+            <lightning-button label="Search" title="Search" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+        </div>
+        
+        <div class="results-container">
+            <lightning-datatable
+                data={contacts} 
+                columns={columns}
+                key-field="Id"
+                resize-column-disabled
+                hide-checkbox-column>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+</template>
