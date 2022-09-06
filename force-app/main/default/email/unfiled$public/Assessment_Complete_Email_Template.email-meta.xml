@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Assessment Complete</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Assessment Complete Email Template</name>
+    <style>none</style>
+    <subject>Assessment Complete</subject>
+    <textOnly>Hello Mr.{!User.Name},  The Assessment is done: Username: frangel@assesmentksquaregroup.com Date of Completion: {!Today} Github: https://github.com/frangelhernandez/dev-assessment</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
