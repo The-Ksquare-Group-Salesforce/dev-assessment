@@ -1,0 +1,122 @@
+<template>
+    <div class="slds-grid">
+        <lightning-card overflow="hidden" title="Contact List" class="slds-size_2-of-3">
+            <div class="slds-grid slds-var-p-left_medium slds-wrap">
+                <div class="slds-grid slds-grid_align-space">
+                    <lightning-input class="slds-size_2-of-3 search" type="search" onkeyup={handleKeyChange}
+                        label="Search" value={searchKey}>
+                    </lightning-input>
+                    <lightning-button class="slds-size_1-of-3 slds-var-p-top_large" label="Search"
+                        onclick={handleSearch} icon-name="utility:search"></lightning-button>
+                </div>
+                <div>
+                    <lightning-combobox label="Records" name="Records" placeholder='5' options={recordsOptions}
+                        onchange={handleRecordsChange}>
+                    </lightning-combobox>
+                </div>
+            </div>
+            <table
+                class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped slds-table_col-bordered slds-var-p-top_medium slds-var-p-bottom_medium slds-var-p-left_small">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="slds-truncate"> Name <lightning-button-icon class="icon" value="Name"
+                                    data-direction="asc" onclick={sortColumns} size="xx-small" icon-name={nameSortIcon}>
+                                </lightning-button-icon>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="slds-truncate"> Email <lightning-button-icon value="Email" class="icon"
+                                    data-direction="asc" onclick={sortColumns} size="xx-small"
+                                    icon-name={emailSortIcon}>
+                                </lightning-button-icon>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="slds-truncate"> Phone <lightning-button-icon value="Phone" class="icon"
+                                    data-direction="asc" onclick={sortColumns} size="xx-small"
+                                    icon-name={phoneSortIcon}>
+                                </lightning-button-icon>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody if:true={contacts}>
+                    <tr for:each={contacts} for:item="contact" key={contact.id}>
+                        <td style="cursor:pointer">
+                            <c-contact-list-helper contact-id={contact.Id} contact-name={contact.Name}
+                                onnameclick={onSelectHandler}>
+                            </c-contact-list-helper>
+                        </td>
+                        <td>{contact.Email} </td>
+                        <td>{contact.Phone} </td>
+                    </tr>
+                </tbody>
+                <tbody>
+
+                </tbody>
+            </table>
+            <div>
+                <lightning-layout horizontal-align="space" class="slds-var-p-top_medium">
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-button disabled={showPreviousButton} label="Previous" icon-name="utility:chevronleft"
+                            onclick={previousHandler}>
+                        </lightning-button>
+                    </lightning-layout-item>
+                    <lightning-layout-item if:true={contacts} flexibility="auto" class="slds-var-p-top_medium">
+                        Page {page} of {totalPage}.
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto">
+                        <lightning-button disabled={showNextButton} label="Next" icon-name="utility:chevronright"
+                            icon-position="right" onclick={nextHandler}>
+                        </lightning-button>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </lightning-card>
+
+        <div
+            class="slds-grid slds-grid_vertical slds-grid_vertical-stretch slds-var-p-left_medium  slds-align_absolute-center">
+            <div title="Detailed Information"
+                class="slds-grid slds-grid_vertical slds-grid_vertical-stretch slds-var-p-left_medium  slds-align_absolute-center">
+                <div class="slds-col slds-size_4-of-5">
+                    <span>
+                        <template if:true={selectedContact}>
+                            <template if:true={selectedContact.Picture__c}>
+                                <img class="img" onclick={handleImageClick} width="150px"
+                                    src={selectedContact.Picture__c}>
+                            </template>
+                            <template if:false={selectedContact.Picture__c}>
+                                <img class="img" onclick={handleImageClick} width="150px"
+                                    src="https://www.salesforce.com/content/dam/sfdc-docs/www/resources/campaign-assets/9-reasons/images/salesforce-logo-cloud.png">
+                            </template>
+                            <p>{selectedContact.Name}</p>
+                            <p>{selectedContact.Title}</p>
+                            <p>{selectedContact.Phone}</p>
+                            <p>
+                                <lightning-formatted-email value={selectedContact.Email}></lightning-formatted-email>
+                            </p>
+                        </template>
+                    </span>
+                </div>
+                <template if:false={selectedContact}>
+                    <div class="slds-col slds-size_4-of-5">
+                        Please select a contact to see detailed information.
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="slds-grid slds-var-p-top_medium  slds-var-p-left_medium  slds-var-p-right_medium slds-var-p-bottom_medium slds-grid_align-spread">
+        <div>
+            <button class="slds-button  slds-button_text-destructive " label="Close"
+                onclick={closeHandler}>Close</button>
+        </div>
+        <div>
+            <button class="slds-button slds-button_neutral" label="Create New Contact"
+                onclick={createContactHandler}>Create New Contact</button>
+        </div>
+    </div>
+</template>
