@@ -1,0 +1,49 @@
+<template>
+
+
+    <Lightning-card>
+        <div class="slds-grid slds-gutters">
+            <!-- Column 1 -->
+            <div class="slds-col slds-size_2-of-3">
+                <div class="slds-var-m-around_medium">
+                    <lightning-input type="search" placeholder="Contact name" onchange={handleSearch} >
+        
+                    </lightning-input>
+                </div>
+        
+                <div class="slds-var-m-around_medium" style="height:200px;">
+                        <lightning-datatable
+                            key-field="id"
+                            data={data}
+                            columns={dataColumns}
+                            onrowaction={handleClick}>
+                        </lightning-datatable>
+                </div>
+        
+                
+                    <div class="slds-var-m-around_medium">
+                      <lightning-button
+                        label="Create"
+                        onclick={handleShowModal}
+                      ></lightning-button>
+                      <c-modal-Popup record-id={recordId}> </c-modal-Popup>
+                    </div>
+                  
+            </div>
+
+            <!-- Column 2 -->
+            <div class="slds-col slds-size_1-of-3">
+                <img src={ImgTag} width="170px" onclick={handleShowModalView} style="cursor:pointer;">
+                <div style="bottom: 0px;">
+                    <p><lightning-formatted-text value={NameTag}></lightning-formatted-text></p>
+                    <p><lightning-formatted-text value={TitleTag}></lightning-formatted-text></p>
+                    <p><lightning-formatted-rich-text value={PhoneTag}></lightning-formatted-rich-text></p>
+                    <p><lightning-formatted-rich-text value={EmailTag}></lightning-formatted-rich-text></p>
+                </div>
+            </div>
+          </div>
+        
+
+</Lightning-card>
+
+</template>
