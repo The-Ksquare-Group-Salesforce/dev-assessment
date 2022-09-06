@@ -1,0 +1,6 @@
+<template>
+    <c-related-contacts-list record-id={recordId} onchild={handleChild} oncontactview={handlecontactView} imageurl={image}></c-related-contacts-list>
+    <c-contact-detail contactid={contactId} oncontactview={handlecontactView}></c-contact-detail>
+
+    <lightning-button name="NewContact" onclick={handleCreate} label="New Contact"></lightning-button>
+</template>

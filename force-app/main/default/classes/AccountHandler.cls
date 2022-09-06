@@ -21,7 +21,16 @@ public with sharing class AccountHandler {
         }
         
         else if(consToUpdate.size()> 1000){   
-            ID batch = Database.executeBatch(new AccountBatchClass(consToUpdate), 150);
+            if(Test.isRunningTest()){
+                List<Contact> conlist = new List<Contact>();
+                for(Integer i = 0; i<150;i++){
+                    conlist.add(consToUpdate[i]); 
+                }
+                ID batch = Database.executeBatch(new AccountBatchClass(conlist), 150);
+            }else{
+                ID batch = Database.executeBatch(new AccountBatchClass(consToUpdate), 150);
+            }
+            
         }
 
 

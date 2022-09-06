@@ -1,0 +1,21 @@
+<template>
+        <lightning-card title="Contacts"  >
+            <lightning-input type="text"
+            value={searchTerm}
+            label="Contact Name"
+            onchange={searchKeyword}
+            ></lightning-input>
+            
+            <div style="height: 300px;">
+                <lightning-datatable
+                    key-field="Id"
+                    data={contacts}
+                    columns={columns}
+                    enable-infinite-loading
+                    hide-checkbox-column="true"
+                    onloadmore={loadMoreData}
+                    onrowaction={passId}>
+                </lightning-datatable>
+            </div>    
+        </lightning-card>
+</template>

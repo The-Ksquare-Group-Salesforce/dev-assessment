@@ -1,0 +1,26 @@
+<!-- <template>
+    <div style="height:500px">
+    <lightning-datatable key-field="Id"
+            data={accounts}
+            columns={columns}
+            enable-infinite-loading
+            onloadmore={loadMoreData}
+            hide-checkbox-column="true"
+            show-row-number-column="true">
+    </lightning-datatable> 
+</div>
+</template> -->
+<template>
+        <lightning-card title="Contacts"  >
+            <div style="height: 300px;">
+                <lightning-datatable
+                    key-field="Id"
+                    data={contacts}
+                    columns={columns}
+                    enable-infinite-loading
+                    hide-checkbox-column="true"
+                    onloadmore={loadMoreData}>
+                </lightning-datatable>
+            </div>    
+        </lightning-card>
+</template>

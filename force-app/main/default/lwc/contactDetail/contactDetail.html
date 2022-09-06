@@ -1,0 +1,30 @@
+<template>
+    <lightning-card title="Contact Information">
+    <div>
+        <lightning-record-view-form record-id={contactid} object-api-name="Contact">
+            <div class="slds-grid slds-wrap">
+                <div onclick={handleOpenRecordClick}  class="slds-col slds-size_1-of-6">
+                    <lightning-output-field field-name="Photo__c"></lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-output-field field-name="FirstName"></lightning-output-field>                   
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-output-field field-name="LastName"></lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-output-field field-name="Email"></lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-output-field field-name="Phone"></lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-output-field field-name="Title"></lightning-output-field>
+                </div>
+                
+            </div>
+        </lightning-record-view-form>
+    </div>
+    
+</lightning-card> 
+</template>

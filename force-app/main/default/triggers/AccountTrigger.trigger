@@ -1,3 +1,3 @@
-trigger AccountTrigger on Account (before insert, after update) {
+trigger AccountTrigger on Account (after update) {
     AccountHandler.UpdateContacts(Trigger.new);
 }
