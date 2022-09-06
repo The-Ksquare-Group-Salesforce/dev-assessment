@@ -1,0 +1,16 @@
+<template>
+    <div>
+        <lightning-card title='Related Contacts' icon-name="custom:custom11"></lightning-card>
+    </div>
+    <div>
+        <lightning-input type="search" onchange={handleSearch} variant="label-hidden"
+            class="slds-var-m-bottom_small" label="Search" placeholder="Search for a contact" value={searchVal}>
+        </lightning-input>
+    </div>
+    <div>
+        <template if:true={contacts}>
+            <lightning-datatable key-field="id" data={contacts} columns={columns}>
+            </lightning-datatable>
+        </template>
+    </div>
+</template>
