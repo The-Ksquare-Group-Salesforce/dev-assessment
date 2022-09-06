@@ -20,7 +20,7 @@
         <members>*</members>
         <name>ApexTrigger</name>
     </types>
-    <types>
+    <types>pp
         <members>*</members>
         <name>AuraDefinitionBundle</name>
     </types>
