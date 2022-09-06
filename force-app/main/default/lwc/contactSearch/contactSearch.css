@@ -1,0 +1,11 @@
+.searcher-container {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+}
+
+.results-container {
+    margin: 20px;
+    justify-content: center;
+    align-items: center;
+}
