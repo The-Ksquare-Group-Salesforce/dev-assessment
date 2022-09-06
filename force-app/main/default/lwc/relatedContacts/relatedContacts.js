@@ -1,66 +1,29 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import getContacts from '@salesforce/apex/AccountLWCController.getContacts';
-import NAME_FIELD from '@salesforce/schema/Contact.Name';
 
-const actions = [
-    { label: 'Show details', name: 'show_details' },
-];
+import NAME_FIELD from '@salesforce/schema/Contact.Name';
+import TITLE_FIELD from '@salesforce/schema/Contact.Title';
+import PHONE_FIELD from '@salesforce/schema/Contact.Phone';
+import EMAIL_FIELD from '@salesforce/schema/Contact.Email';
 
 export default class RelatedContacts extends LightningElement {
-    main = true;
-    @track columns = [
-        /*{
-            type:"button",
-            fixedWidth: 150,
-            typeAttributes: {
-                label: 'View',
-                name: 'view',
-                variant: 'brand'
-            }
-        }*/
-        {
-            type: 'action',
-            typeAttributes: { rowActions: actions },
-        },
-        {
-            label: 'First Name',
-            fieldName: 'FirstName'
-        },
-        {
-            label: 'Last Name',
-            fieldName: 'LastName'
-        },
-        {
-            label: 'Email',
-            fieldName: 'Email',
-            type: 'email'
-        },
-        {
-            label: 'Phone',
-            fieldName: 'phone',
-            type: 'phone'
-        }
-    ];
-
+   
     @track contacts;
     @track contactId;
-    @api recordId;
-    searchVal = '';
-    //wiredContacts;
 
+    @api recordId;
+
+    searchVal = '';
+    main = true;
     nameField = NAME_FIELD;
+    titleField = TITLE_FIELD;
+    phoneField = PHONE_FIELD;
+    emailField = EMAIL_FIELD;
 
     @wire (getContacts, {currentAccount: '$recordId', searchVal: '$searchVal'}) wiredAccounts({data,error}){
-        //this.wiredContacts = data;
         if (data) {
             this.contacts = data;
-            this.contactId = data[0].Id;
-            //console.log(data[0].attr('id'));
-            //console.log(data[0].Id);
-            //console.log(data[0].Id);
-            //console.log(data[0]);
             console.log(data); 
-            console.log(this.contactId);
         } else if (error) {
             this.contacts = undefined;
             console.log(error);
@@ -87,41 +50,9 @@ export default class RelatedContacts extends LightningElement {
     handleSubmit(event) {
         console.log('onsubmit event recordEditForm'+ event.detail.fields);
         this.main = true;
-        //refreshApex(this.wiredContacts);
     }
 
-    //record = this.contacts.first();
-
-    handleRowActions(event) {
-        const actionName = event.detail.action.name;
-        const row = event.detail.row;
-        console.log(row);
-        console.log(row.FirstName);
-        const { id } = row;
-        console.log('Record Id ==> '+ id);
+    viewInfo(event) {
+        this.contactId = event.target.dataset.id;
     }
-    
-    /*handleRowAction(event) {
-        const actionName = event.detail.action.name;
-        const row = event.detail.row;
-        switch (actionName) {
-            case 'delete':
-                this.deleteRow(row);
-                break;
-            case 'show_details':
-                this.showRowDetails(row);
-                break;
-            default:
-        }
-    }
-
-    deleteRow(row) {
-        const { id } = row;
-        const index = this.findRowIndexById(id);
-        if (index !== -1) {
-            this.data = this.data
-                .slice(0, index)
-                .concat(this.data.slice(index + 1));
-        }
-    }*/
 }
