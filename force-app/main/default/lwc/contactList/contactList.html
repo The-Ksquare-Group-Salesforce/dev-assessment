@@ -1,8 +1,26 @@
 <template>
-    <lightning-card title ="Contact Search">
-        <lightning-input type="search"></lightning-input>
-        <lightning-button label="Search"></lightning-button>
-        <lightning-button label="Close"></lightning-button>
-        <lightning-button label="Create New"></lightning-button>
+    <lightning-card title="Contacts" icon-name="standard:contact">
+        <div>
+            <lightning-input type="search"
+                onchange={handleSearchTermChange}
+                variant="label-hidden"
+                class="slds-var-m-bottom_small"
+                label="Search"
+                placeholder="Search for contacts"
+                value={searchTerm}>
+            </lightning-input>
+         </div>
+        <lightning-button label="Search"
+        onclick={handleOnClickButton}
+        variant="brand">
+        </lightning-button>
+        <lightning-datatable if:true={contacts.data}
+                    key-field="id"
+                    data={contacts.data}
+                    columns={columns}
+                    hide-checkbox-column="true"
+                    onrowaction={navigateToRecordViewPage}
+                    show-row-number-column>
+        </lightning-datatable>
     </lightning-card>
 </template>
