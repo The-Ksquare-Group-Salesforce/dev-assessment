@@ -1,4 +1,4 @@
-public with sharing class ContactController {
+public with sharing class ContactLWCController {
 @AuraEnabled(cacheable=true scope='global')
 public static List<Contact> getContactsByAccountId(String accountId){
     return [SELECT Id, FirstName, LastName, Email, Phone, Title FROM Contact WHERE AccountId =: accountId];
