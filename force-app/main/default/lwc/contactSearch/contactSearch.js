@@ -13,6 +13,10 @@ export default class ContactSearch extends LightningElement {
   @track contacts = [];
   @track mainContacts = [];
   @track error;
+  @track showModal = false;
+  @track showNegativeButton;
+  @track showPositiveButton = true;
+  @track positiveButtonLabel = 'Close';
   name = '';
   title = '';
   profilePic;
@@ -133,6 +137,11 @@ export default class ContactSearch extends LightningElement {
     this.loadMoreStatus = 'Loading';
     // Get new set of records and append to this.data
     this.loadData();
+  }
+
+  showModalPopup() {
+    console.log('Show it');
+    this.showModal = true;
   }
 
 }
