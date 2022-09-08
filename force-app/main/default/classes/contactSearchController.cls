@@ -22,6 +22,7 @@ public with sharing class contactSearchController {
                                      FROM Contact
                                      WHERE Name LIKE :searchText
                                      Order by Name 
+                                     LIMIT 20
                                      ];
         return contactList;                     
     }
