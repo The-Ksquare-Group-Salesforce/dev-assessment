@@ -1,0 +1,96 @@
+<template>
+    <template if:true={main}>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_8-of-12 slds-m-left_small">
+                <div>
+                    <lightning-card title='Related Contacts' icon-name="standard:contact_list"></lightning-card>
+                </div>
+                <div>
+                    <lightning-input type="search" onchange={handleSearch} variant="label-hidden"
+                        class="slds-var-m-bottom_small" label="Search" placeholder="Search for a contact" value={searchVal}>
+                    </lightning-input>
+                </div>
+                <div>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-size_2-of-3 slds-table_resizable-cols" border="1" cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={contacts} for:item="contact">
+                                <tr key={contact.Id}>
+                                    <td>
+                                        <a data-id={contact.Id} onclick={viewInfo}>{contact.FirstName} {contact.LastName}</a>                            
+                                    </td>
+                                    <td>
+                                        <lightning-formatted-email value={contact.Email}></lightning-formatted-email>
+                                    </td>
+                                    <td>
+                                        <lightning-formatted-phone value={contact.Phone}></lightning-formatted-phone>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>        
+                </div>
+                <div class="slds-grid slds-gutters slds-p-top_large">
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-button label="Close" title="Non-primary action" icon-position="left" onclick={handleClick1} class="slds-m-top_xx-large slds-m-bottom_xx-large slds-m-left_x-large" style="width:450px"></lightning-button>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-button variant="brand" label="New Contact" icon-position="left" title="Primary action" onclick={handleClick2} class="slds-m-bottom_xx-large slds-m-top_xx-large slds-m-left_x-large" style="width:450px"></lightning-button>
+                    </div> 
+                </div>
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-m-right_small">
+                <div>
+                    <lightning-card title='Selected Contact' icon-name="standard:contact" class="slds-align_absolute-center"></lightning-card>
+                </div>
+                <div>
+                    <template if:true={contactId}>
+                        <lightning-record-view-form
+                        record-id={contactId}
+                        object-api-name="Contact"
+                    >
+                        <div class="slds-box slds-theme_default">
+                            <lightning-output-field field-name={photoField} onclick={viewContact}> </lightning-output-field>
+                            <lightning-output-field field-name={nameField}> </lightning-output-field>
+                            <lightning-output-field field-name={titleField}> </lightning-output-field>
+                            <lightning-output-field field-name={phoneField}> </lightning-output-field>
+                            <lightning-output-field field-name={emailField}> </lightning-output-field>
+                        </div>
+                    </lightning-record-view-form>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template if:false={main}>
+        <div class="spinner">
+            <template if:true={isLoading}>
+                 <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                 </lightning-spinner>
+            </template>
+        </div>
+        <div>
+            <lightning-card title='Create New Contact' icon-name="action:new_contact"></lightning-card>
+            <lightning-record-edit-form object-api-name="Contact" onsuccess={handleSuccess} onsubmit ={handleSubmit}>
+                <lightning-messages>
+                </lightning-messages>
+                <lightning-input-field field-name='FirstName'></lightning-input-field>
+                <lightning-input-field field-name='LastName'></lightning-input-field>
+                <lightning-input-field field-name='Title'></lightning-input-field>
+                <lightning-input-field field-name='Email'></lightning-input-field>
+                <lightning-input-field field-name='Phone'></lightning-input-field>
+                <lightning-input-field field-name='Photo__c'></lightning-input-field>
+                <lightning-input-field field-name='AccountId' value={recordId}></lightning-input-field>
+                <div class="slds-clearfix">
+                    <lightning-button variant="brand" class="slds-m-top_medium slds-m-right_medium slds-float_right" type="submit" label="Create Contact"></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+    </template>
+</template>
