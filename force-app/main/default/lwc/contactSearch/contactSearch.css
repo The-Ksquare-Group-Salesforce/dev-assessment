@@ -45,6 +45,8 @@
     margin: 12px;
 }
 
-.slds-box{
-    overflow:hidden;
+.table-scroll{
+    height: 313px;
+    overflow: scroll;
+    overflow-x: hidden;
 }

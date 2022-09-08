@@ -1,13 +1,12 @@
 public with sharing class contactSearchController {
 
     @AuraEnabled
-    public static List<Contact> getAllContacts(Integer limitSize, Integer offset){
+    public static List<Contact> getAllContacts(Integer limitSize){
         
-        List<Contact> contactList = [SELECT Id, Name, Email, Phone, Title
+        List<Contact> contactList = [SELECT Id, Name, Email, Phone, Title, OrgUrl__c
                                      FROM Contact
                                      Order by Name
                                      LIMIT :limitSize
-                                     OFFSET :offset
                                      ];
         
         return contactList;
@@ -19,11 +18,10 @@ public with sharing class contactSearchController {
         String searchText = '%%';
         if(!String.isEmpty(search)) searchText = search + '%';
          
-        List<Contact> contactList = [SELECT Id, Name, Email, Phone, Title
+        List<Contact> contactList = [SELECT Id, Name, Email, Phone, Title, OrgUrl__c
                                      FROM Contact
                                      WHERE Name LIKE :searchText
                                      Order by Name 
-                                     Limit 10
                                      ];
         return contactList;                     
     }

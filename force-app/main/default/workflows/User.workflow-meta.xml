@@ -5,11 +5,11 @@
         <description>Send Email Assessment Complete</description>
         <protected>false</protected>
         <recipients>
-            <recipient>yensipuello@assesmentksquaregroup.com</recipient>
+            <recipient>erick.diaz@devassignment.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>ypuello26@gmail.com</recipient>
+            <recipient>yensipuello@assesmentksquaregroup.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>

@@ -3,7 +3,6 @@ import getContacts from '@salesforce/apex/contactSearchController.getAllContacts
 import getSearchContacts from '@salesforce/apex/contactSearchController.getSearchContacts';
 import USER_IMAGE from '@salesforce/resourceUrl/UserImage';
 import { CloseActionScreenEvent } from 'lightning/actions';
-import { New } from 'lightning/actions';
 
 const columns = [
     {label: 'Name', fieldName: 'Name', type: 'text'},
@@ -15,8 +14,7 @@ export default class ContactSearch extends LightningElement {
 
     contacts=[];
     currentContact={};
-    limit = 10;
-    offSet = 0;
+    limit = 20;
     error;
     columns = columns;
     userImage = USER_IMAGE;
@@ -33,16 +31,23 @@ export default class ContactSearch extends LightningElement {
         })  
 
         this.currentContact = {
+            Id: contactData[0].Id,
             Name: contactData[0].Name,
             Email: contactData[0].Email,
             Phone: contactData[0].Phone,
-            Title: contactData[0].Title
+            Title: contactData[0].Title,
+            OrgUrl: contactData[0].OrgUrl__c
         }
 
     }
 
+    getScrollable(){
+        let isCurrentOverFlowActive = this.currentContact.length() <= 10 ? true : false;  
+        if(isCurrentOverFlowActive) return `overflow: hidden`;
+    }
+
     loadContactData(){
-        return getContacts({limitSize: this.limit, offset: this.offSet}).then(result => {
+        return getContacts({limitSize: this.limit}).then(result => {
             let updateRecords = [...this.contacts, ...result];
             this.contacts = updateRecords;
             this.error = undefined;
@@ -52,18 +57,6 @@ export default class ContactSearch extends LightningElement {
             this.contacts = undefined;
         });
     }
-
-
-    loadMoreContactData(event){
-        const { target } = event;
-        target.isLoading = true;
-
-        this.offSet = this.offSet + this.limit;
-        this.loadContactData().then(() => {
-            target.isLoading = false;
-        })
-    }
-
     getContactData(event){
 
         let contactId = event.currentTarget.dataset.id;
@@ -73,10 +66,12 @@ export default class ContactSearch extends LightningElement {
         })
 
         this.currentContact = {
+            Id: contactData[0].Id,
             Name: contactData[0].Name,
             Email: contactData[0].Email,
             Phone: contactData[0].Phone,
-            Title: contactData[0].Title
+            Title: contactData[0].Title,
+            OrgUrl: contactData[0].OrgUrl__c
         }
     }
 
@@ -109,6 +104,10 @@ export default class ContactSearch extends LightningElement {
         if(isCount || count.length == 0){
             this.getContactBySearch(this.search);
         }
+    }
+
+    handleUserDetailView(){
+        window.location.href = this.currentContact.OrgUrl;
     }
 
     closeAction(){

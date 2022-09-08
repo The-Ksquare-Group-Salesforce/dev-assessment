@@ -22,7 +22,7 @@
                 <div class="slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
                     <lightning-layout>
                         <lightning-layout-item size="7">
-                            <div class="slds-text-align_center">
+                            <div class="slds-text-align_center table-scroll">
                                 <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
                                     <thead>
                                         <tr class="slds-line-height_reset">
@@ -57,11 +57,11 @@
                             <div class="slds-text-align_center">
                                 <!-- Here we make the contact card -->
                                 <div class="contact-card-container">
-                                        <img src={userImage}>
+                                        <img src={userImage} onclick={handleUserDetailView}>
                                         <span class="title">{currentContact.Name}</span>
                                         <span>{currentContact.Title}</span>
                                         <span>{currentContact.Phone}</span>
-                                        <span>{currentContact.Email}</span>  
+                                        <span>{currentContact.Email}</span>
                                 </div>
                             </div>
                         </lightning-layout-item>
@@ -79,7 +79,7 @@
 
                         <lightning-layout-item padding="around-small" size="6">
                             <div class="slds-text-align_right">
-                                <button class="slds-button slds-button_brand" onclick={createContact}>Create New</button>
+                                <button class="slds-button slds-button_brand">Create New</button>
                             </div>
                         </lightning-layout-item>
                     </lightning-layout>
