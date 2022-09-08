@@ -50,3 +50,7 @@
     overflow: scroll;
     overflow-x: hidden;
 }
+
+img:hover{
+    cursor: pointer ;
+}
