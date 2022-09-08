@@ -1,0 +1,89 @@
+<template>
+    <div class="container">
+        <lightning-layout multiple-rows="true" class="card-container x-large">
+
+            <lightning-layout-item size="12" padding="around-small">
+                <div class="slds-text-align_left">
+                    <span class="title">Contact Search</span>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item size="12" padding="around-small">
+                <div class="slds-text-align_left search-content divisor">
+                    <div class="search-align">Contact Name</div>
+                    <div class="search-align search-margin-left">
+                        <lightning-input data-id="loading" type="search" value={search} onchange={handleOnSearch} is-loading={isLoading}></lightning-input>
+                    </div>
+                    <div class="search-align search-margin-left"><button class="slds-button slds-button_brand" onclick={handleSearch}>Search</button></div>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item size="12">                
+                <div class="slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+                    <lightning-layout>
+                        <lightning-layout-item size="7">
+                            <div class="slds-text-align_center table-scroll">
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                           <template for:each={columns} for:item="column">
+                                                <th class="" scope="col" key={column.key}>
+                                                    <div class="slds-truncate" title={column.label}>
+                                                        {column.label}
+                                                    </div>
+                                                </th>
+                                           </template>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={contacts} for:item="contact">
+                                            <tr class="slds-hint-parent" key={contact.Id} onclick={getContactData} data-id={contact.Id}>
+                                                    <th data-label="Name" scope="row">
+                                                        <div class="slds-truncate">{contact.Name}</div>
+                                                    </th>
+                                                    <td data-label="Email">
+                                                        <div class="slds-truncate"><a href="">{contact.Email}</a></div>
+                                                    </td>
+                                                    <td data-label="Phone">
+                                                        <div class="slds-truncate">{contact.Phone}</div>
+                                                    </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="5">
+                            <div class="slds-text-align_center">
+                                <!-- Here we make the contact card -->
+                                <div class="contact-card-container">
+                                        <img src={userImage} onclick={handleUserDetailView}>
+                                        <span class="title">{currentContact.Name}</span>
+                                        <span>{currentContact.Title}</span>
+                                        <span>{currentContact.Phone}</span>
+                                        <span>{currentContact.Email}</span>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item size="12" padding="around-small">
+                    <lightning-layout class="divisor">
+                        <lightning-layout-item padding="around-small" size="6">
+                            <div class="slds-text-align_left">
+                                <button class="slds-button slds-button_brand" onclick={closeAction}>Close</button>
+                            </div>   
+                        </lightning-layout-item>
+
+                        <lightning-layout-item padding="around-small" size="6">
+                            <div class="slds-text-align_right">
+                                <button class="slds-button slds-button_brand">Create New</button>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>

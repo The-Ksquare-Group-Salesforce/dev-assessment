@@ -1,0 +1,56 @@
+.title{
+    font: bold;
+    font-size: 30px;
+}
+
+.box{
+    border-top: 1px solid #d4d5d59f;
+    border-bottom: 1px solid #d4d5d59f;
+}
+
+.slds-form-element{
+    width: 200px;
+    border-radius: 10px;
+}
+
+.container{
+    width: 100%;
+    padding: 10px;
+}
+
+.contact-card-container > span{
+    display: block;
+}
+
+.contact-card-container{
+    height: 311px;
+    box-shadow: 0 4px 8px 0 rgba(123, 123, 123, 0.2);
+    transition: 0.3s;
+    font-size: 13px;
+}
+
+.title{
+    font: bold;
+}
+
+.divisor{
+    border-top: 0.5px solid rgb(218, 218, 218);
+}
+
+.search-align{
+    display: inline-block;
+}
+
+.search-margin-left{
+    margin: 12px;
+}
+
+.table-scroll{
+    height: 313px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+img:hover{
+    cursor: pointer ;
+}

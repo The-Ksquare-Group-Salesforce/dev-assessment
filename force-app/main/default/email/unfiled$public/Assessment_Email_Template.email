@@ -1,0 +1,6 @@
+Hello {!User.Name},
+
+Your username {!User.Username} has successfully complete the Assessment. The date of completion is {!User.Date_of_completion__c} and the time to build this solution was {!User.Solution_Time__c}. You can see your work in the repository url: {!User.Github_Repository__c}
+
+Best regards,
+Thank you
