@@ -1,0 +1,117 @@
+<template>
+    <lightning-layout-item class="slds-p-horizontal_small" size="12">
+        <!-- Header, welcome text and show/ hide button -->
+        <lightning-card>
+            <div slot="title">
+                <h3><lightning-icon icon-name="standard:search" size="small"></lightning-icon> Contact Search</h3>
+            </div>
+            <lightning-button slot="actions" variant="brand" label={showContactSearchLabel} onclick={handleShowContactSearch}></lightning-button>
+            <p class="slds-p-horizontal_medium">{welcomeName} Click the button to show the content of this component.</p>
+        </lightning-card>
+        <!-- Show / Hide functionality-->
+        <template if:true={showContactSearchComponent}>
+            <!-- Search Component and Results Table -->
+            <lightning-card>
+                <lightning-layout multiple-rows="false" vertical-align="end">
+                        <div class="slds-p-left_small slds-p-right_small">
+                            <p class="slds-p-bottom_x-small"><strong>Contact Name</strong></p>
+                        </div>
+                        <div class="slds-p-right_small">
+                            <lightning-input type="text" label="Contact Name" variant="label-hidden" placeholder="Search" value={key} 
+                            onchange={updateKey} onkeypress={handleEnter}></lightning-input>
+                        </div>
+                        <lightning-button variant="brand" label="Search" onclick={handleSearch}></lightning-button>
+                </lightning-layout>
+                <lightning-layout multiple-rows="false">
+                    <lightning-layout-item padding="around-small" size="9">
+                        <lightning-datatable data={conList} columns={columns} key-field="id"
+                            onrowclick={handleSelectedColRow} hide-checkbox-column show-row-number-column>
+                        </lightning-datatable>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="3">
+                        <template if:true={showContactDetails}>
+                            <div class="slds-box slds-p-top_small" style="background-color: white;">
+                                <template if:true={contactPhoto}>
+                                    <div class="slds-align_absolute-center" onclick={handleImageClick} title={contactId}>
+                                        <div style="height: 100%;" class="slds-p-around_medium">
+                                            <img src={contactPhoto} width="100" height="100"/>
+                                        </div>
+                                    </div>
+                                </template>
+                                <p>{contactName}</p>
+                                <p>{contactRole}</p>
+                                <p>{contactPhone}</p>
+                                <p>{contactEmail}</p>
+                            </div>
+                        </template>
+                        <template if:false={showContactDetails}>
+                            <div class="slds-box slds-p-top_small" style="background-color: white;">
+                                <div class="slds-align_absolute-center">
+                                    <p>Hint: Click the checkbox on the desired contact record from the datatable to display the contact details
+                                    PS.- Only select one record!</p>
+                                </div>
+                            </div>
+                        </template>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-card>
+            <!-- Create Contact Component -->
+            <template if:true={showCreateContactComponent}>
+                <lightning-card>
+                    <div slot="title">
+                        <h3><lightning-icon icon-name="standard:contact" size="small"></lightning-icon> Create Contact</h3>
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                            <div class="slds-form-element">
+                                <lightning-input type="text" label="First Name" value={firstName} onchange={contactChangeVal}></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                            <div class="slds-form-element">
+                                <lightning-input type="text" label="Last Name" value={lastName} onchange={contactChangeVal} required></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                            <div class="slds-form-element">
+                                <lightning-input type="email" label="Email" value={emailId} onchange={contactChangeVal} ></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                            <div class="slds-form-element">
+                                <lightning-input type="tel" label="Phone" value={phone} onchange={contactChangeVal}></lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                            <div class="slds-form-element">
+                                <p style="color:rgb(68, 68, 68); font-size:0.75rem">Account Name</p>
+                                <lightning-record-edit-form object-api-name="Contact" id="createContactForm" >
+                                    <lightning-input-field field-name="AccountId" value={selectedAccount} variant="label-hidden" onchange={handleAccountSelection}> </lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </div>
+                        <div class="slds-p-horizontal--small slds-col slds-size_6-of-12 slds-m-bottom--medium">
+                            <div class="slds-form-element slds-p-top_large ">
+                                <div class="slds-align_absolute-center">
+                                    <lightning-button class="slds-p-right_small" label="Cancel" variant="destructive" onclick={hideContact}></lightning-button>
+                                    <lightning-button class="slds-p-left_small" label="Create Contact" variant="brand" onclick={insertContactAction}></lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-card>
+            </template>
+            <!-- Footer with buttons -->
+            <lightning-card>
+                <lightning-layout multiple-rows="false">
+                    <lightning-layout-item padding="around-small" size="12">
+                        <div class="slds-align_absolute-center">
+                            <lightning-button variant="destructive" label="Hide Contact Search" title="Destructive action" onclick={handleClose} class="slds-p-right_small"></lightning-button>
+                            <lightning-button variant="brand" label="Create New Contact" title="Primary action" onclick={handleCreateNew} class="slds-p-left_small"></lightning-button>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-card>
+        </template>
+    </lightning-layout-item>
+</template>
