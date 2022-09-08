@@ -1,6 +1,7 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { refreshApex } from '@salesforce/apex';
+import { NavigationMixin } from "lightning/navigation";
 import getContacts from '@salesforce/apex/AccountLWCController.getContacts';
 import NAME_FIELD from '@salesforce/schema/Contact.Name';
 import TITLE_FIELD from '@salesforce/schema/Contact.Title';
@@ -8,7 +9,7 @@ import PHONE_FIELD from '@salesforce/schema/Contact.Phone';
 import EMAIL_FIELD from '@salesforce/schema/Contact.Email';
 import PHOTO_FIELD from '@salesforce/schema/Contact.Photo__c';
 
-export default class RelatedContacts extends LightningElement {
+export default class RelatedContacts extends NavigationMixin(LightningElement) {
    
     @track contacts;
     @track contactId;
@@ -18,6 +19,7 @@ export default class RelatedContacts extends LightningElement {
 
     wiredContactsResult;
     searchVal = '';
+    searchVal2 = '';
     main = true;
     nameField = NAME_FIELD;
     titleField = TITLE_FIELD;
@@ -25,7 +27,7 @@ export default class RelatedContacts extends LightningElement {
     emailField = EMAIL_FIELD;
     photoField = PHOTO_FIELD;
 
-    @wire (getContacts, {currentAccount: '$recordId', searchVal: '$searchVal'})
+    @wire (getContacts, {currentAccount: '$recordId', searchVal: '$searchVal2'})
     wiredContacts(result){
         this.wiredContactsResult = result;
         if(result.data){
@@ -39,7 +41,12 @@ export default class RelatedContacts extends LightningElement {
 
     handleSearch(event) {
         this.searchVal = event.target.value;
-        console.log(this.searchVal.lenght);
+        if(this.searchVal.length > 2){
+            this.searchVal2 = this.searchVal;
+        }
+        else{
+            this.searchVal2 = '';
+        }
     }
 
     handleClick1(event) {
@@ -74,5 +81,23 @@ export default class RelatedContacts extends LightningElement {
 
     renderedCallback(){  
         refreshApex(this.wiredContactsResult);
+    }
+
+    viewContact(){
+        console.log('hey there');
+        this.navigateToRecordEditPage(this.contactId);
+
+    }
+
+    navigateToRecordEditPage(recordId) {
+        // Opens the record modal
+        // to view a particular record.
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: recordId,
+                actionName: 'view'
+            }
+        });
     }
 }
