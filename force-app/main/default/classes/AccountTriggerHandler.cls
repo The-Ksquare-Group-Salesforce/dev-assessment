@@ -6,6 +6,10 @@ public with sharing class AccountTriggerHandler {
     private List<Account> oldList;
     private final string YES = 'Yes';
     private final string NO = 'No';
+    private final integer ZERO = 0;
+    private final integer LOWERLIMIT = 200;
+    private final integer UPPERLIMIT = 1000;
+    private final integer BATCHSIZE = 150;
     
     public AccountTriggerHandler() {
         this.newMap = (Map<Id, Account>) Trigger.newMap;
@@ -27,14 +31,14 @@ public with sharing class AccountTriggerHandler {
                 idSetToUpdate2.add(i);
             }
         }   
-        list<Contact> cons1 = [select id, Push_Date__c from Contact where Id IN (SELECT ContactId FROM AccountContactRelation WHERE AccountId in :idSetToUpdate1)];
-        list<Contact> cons2 = [select id, Push_Date__c from Contact where Id IN (SELECT ContactId FROM AccountContactRelation WHERE AccountId in :idSetToUpdate2)];
+        list<Contact> cons1 = [select id, Push_Date__c from Contact where Id IN (SELECT ContactId FROM AccountContactRelation WHERE AccountId in :idSetToUpdate1) WITH SECURITY_ENFORCED];
+        list<Contact> cons2 = [select id, Push_Date__c from Contact where Id IN (SELECT ContactId FROM AccountContactRelation WHERE AccountId in :idSetToUpdate2) WITH SECURITY_ENFORCED];
         integer size = cons1.size() + cons2.size();
-        if(size > 0 && size <= 200){
+        if(size > ZERO && size <= LOWERLIMIT){
             AccountTriggerService.updateSync(cons1, cons2);
-        }else if(size > 200 && size <= 1000){
+        }else if(size > LOWERLIMIT && size <= UPPERLIMIT){
             AccountTriggerService.updateAsync(idSetToUpdate1, idSetToUpdate2);
-        }else if(size > 1000){
+        }else if(size > UPPERLIMIT){
             map<id, dateTime> consMap = new map<id, dateTime>();
             DateTime dateT = DateTime.Now();
             for(Contact c : cons1){
@@ -44,7 +48,7 @@ public with sharing class AccountTriggerHandler {
                 consMap.put(c.id, dateT);
             }
             UpdateContactsBatch batch = new UpdateContactsBatch(consMap);
-            database.executeBatch(batch,150);
+            database.executeBatch(batch,BATCHSIZE);
         }
             
     }
