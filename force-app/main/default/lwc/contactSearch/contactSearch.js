@@ -3,7 +3,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import { encodeDefaultFieldValues } from 'lightning/pageReferenceUtils';
 import { CloseActionScreenEvent } from 'lightning/actions';
 
-import getDirectOrIndirectlyContacts from '@salesforce/apex/ContactController.getDirectOrIndirectlyContacts';
+import getDirectOrIndirectlyContacts from '@salesforce/apex/AccountController.getDirectOrIndirectlyContacts';
 
 const columns = [
     { label: 'Name', type: 'button', typeAttributes: { label: { fieldName: 'Name' }, variant: 'base'}},

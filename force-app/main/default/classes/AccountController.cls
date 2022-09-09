@@ -1,4 +1,4 @@
-public with sharing class ContactController {
+public with sharing class AccountController {
     @AuraEnabled(cacheable=true)
     public static List<Contact> getDirectOrIndirectlyContacts(Id accountId){
         List<Contact> contacts = [SELECT Name, Email, Phone, Title FROM Contact WHERE Id IN 

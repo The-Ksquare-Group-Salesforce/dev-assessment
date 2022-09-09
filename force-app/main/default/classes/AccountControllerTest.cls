@@ -1,4 +1,4 @@
-@isTest public class ContactControllerTest {
+@isTest public class AccountControllerTest {
     @testSetup static void setup() {
         // Insert account #1 with directly related contacts
         Account acc1 = new Account(Name='Test account #1');
@@ -32,7 +32,7 @@
     @isTest static void testGetDirectlyContacts() {
         Account acc = [SELECT Id, LastModifiedDate FROM Account WHERE Name = 'Test account #1' LIMIT 1];
         Test.startTest();
-        	List<Contact> contacts = ContactController.getDirectOrIndirectlyContacts(acc.Id);
+        	List<Contact> contacts = AccountController.getDirectOrIndirectlyContacts(acc.Id);
         Test.stopTest();
         
         System.assertEquals(3, contacts.size(), 'Contacts returned size should be 3');
@@ -41,7 +41,7 @@
     @isTest static void testGetDirectlyOrIndirectlyContacts() {
         Account acc = [SELECT Id, LastModifiedDate FROM Account WHERE Name = 'Test account #2' LIMIT 1];
         Test.startTest();
-        	List<Contact> contacts = ContactController.getDirectOrIndirectlyContacts(acc.Id);
+        	List<Contact> contacts = AccountController.getDirectOrIndirectlyContacts(acc.Id);
         Test.stopTest();
         
         System.assertEquals(6, contacts.size(), 'Contacts returned size should be 6');
