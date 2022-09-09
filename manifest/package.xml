@@ -40,5 +40,13 @@
         <members>Contact.Push_Date__c</members>
         <name>CustomField</name>
     </types>
+    <types>
+        <members>Account.Contact_Search</members>
+        <name>QuickAction</name>
+    </types>
+    <types>
+        <members>Account-Account Layout</members>
+        <name>Layout</name>
+    </types>
     <version>55.0</version>
 </Package>
