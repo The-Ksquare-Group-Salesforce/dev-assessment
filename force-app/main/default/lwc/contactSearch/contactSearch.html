@@ -18,7 +18,7 @@
     <lightning-layout>
       <lightning-layout-item padding="around-small" size="8">
         <template if:true={showTable}>
-          <div style="height: 200px">
+          <div style={setTableHeight}>
           <lightning-datatable
           key-field="Id"
           data={contacts}
@@ -31,12 +31,13 @@
           </lightning-datatable>
         </div>
         </template>
+        <br>
         <lightning-button variant="brand" label="Create Contact" title="Open Modal" onclick={showModalPopup} class="slds-m-left_x-small"></lightning-button>
       </lightning-layout-item>
 
       <lightning-layout-item padding="around-small" size="4">
         <template if:true={showInfo}>
-          <img src={profilePic} width="100" height="100" />
+          <img src={profilePic} width="100" height="100" onclick={navigateToContact}/>
           <p>{name}</p>
           <p>{title}</p>
           <p>{phone}</p>
@@ -47,9 +48,6 @@
   </lightning-card>
   <c-create-contact-modal
   show-modal={showModal}
-  show-positive={showPositiveButton}
-  positive-button-label={positiveButtonLabel}
-  show-negative={showNegativeButton}
-  onpositive={closeModal}
-  onclose={closeModal}></c-create-contact-modal>
+  onclose={closeModal}
+  record-id={recordId}></c-create-contact-modal>
 </template>

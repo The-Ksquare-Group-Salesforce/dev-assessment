@@ -1,33 +1,44 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import getContactsOnSearch from '@salesforce/apex/ContactSearchClass.getContactsOnSearch';
 import getContacts from '@salesforce/apex/ContactSearchClass.getContacts';
+import { NavigationMixin } from 'lightning/navigation';
 
 const columns = [
   { label: 'Name', fieldName: 'Name', type: 'button', typeAttributes: { label: { fieldName: 'Name' }, variant: 'base' } },
   { label: 'Email', fieldName: 'Email', type: 'email' },
   { label: 'Phone', fieldName: 'Phone', type: 'phone' }
 ];
-export default class ContactSearch extends LightningElement {
+export default class ContactSearch extends NavigationMixin(LightningElement) {
   @api recordId;
   @track searchKey = '';
   @track contacts = [];
   @track mainContacts = [];
   @track error;
   @track showModal = false;
-  @track showNegativeButton;
-  @track showPositiveButton = true;
-  @track positiveButtonLabel = 'Close';
+  recordCount;
   name = '';
   title = '';
   profilePic;
   phone;
   email;
+  selectedContactId;
   showInfo = false;
   showTable = false;
   columns = columns;
   loadMoreStatus = '';
   limitSize = 5;
   offSet = 0;
+
+  navigateToContact(){
+    this[NavigationMixin.Navigate]({
+      type: 'standard__recordPage',
+      attributes: {
+        recordId: this.selectedContactId,
+        objectApiName: 'Contact',
+        actionName: 'view'
+      }
+    })
+  }
 
   getName(name) {
     return name;
@@ -47,6 +58,7 @@ export default class ContactSearch extends LightningElement {
   handleRowAction(event) {
     const row = event.detail.row;
     this.showInfo = true;
+    this.selectedContactId = row.Id;
     this.name = this.getName(row.Name);
     this.title = this.getTitle(row.Title);
     this.email = this.getEmail(row.Email);
@@ -89,16 +101,17 @@ export default class ContactSearch extends LightningElement {
   }
   loadData() {
     return getContacts({ limitSize: this.limitSize, offSet: this.offSet, accountId: this.recordId }).then(response => {
-      if(this.contacts.length != 0 && response){
+      if (this.contacts.length != 0 && response) {
         this.contacts = this.contacts.concat(response);
         this.mainContacts = this.mainContacts.concat(response);
+        this.recordCount += response.length;
       }
-      else{
+      else {
+        this.recordCount = response.length;
         this.contacts = response;
         this.mainContacts = this.contacts;
         this.error = undefined;
       }
-
       /*if (this.targetDatatable && this.data.length >= this.totalNumberOfRows) {
         //stop Infinite Loading when threshold is reached
         this.targetDatatable.enableInfiniteLoading = false;
@@ -106,6 +119,7 @@ export default class ContactSearch extends LightningElement {
         this.loadMoreStatus = 'No more data to load';
       }*/
       //Disable a spinner to signal that data has been loaded
+      if(response.length == 0) this.targetDatatable.enableInfiniteLoading = false;
       if (this.targetDatatable) this.targetDatatable.isLoading = false;
 
     }).catch(error => {
@@ -113,17 +127,6 @@ export default class ContactSearch extends LightningElement {
       this.contacts = undefined;
     })
   }
-  /*loadMoreData(event){
-    console.log('Llegue a loadMore');
-        const { target } = event.target;
-        target.isLoading = true;
-
-        this.offSet = this.offSet + this.rowLimit;
-        this.loadData()
-            .then(()=> {
-                target.isLoading = false;
-            });
-  }*/
   loadMoreData(event) {
 
     //event.preventDefault();
@@ -140,8 +143,19 @@ export default class ContactSearch extends LightningElement {
   }
 
   showModalPopup() {
-    console.log('Show it');
     this.showModal = true;
+  }
+  closeModal() {
+    this.showModal = false;
+  }
+  get setTableHeight() {
+    if (this.recordCount == 0) {//set the minimum height
+      return 'height: 100px;';
+    }
+    else if (this.recordCount >= 5) {//set the max height
+      return 'height: 200px;';
+    }
+    return '';
   }
 
 }
