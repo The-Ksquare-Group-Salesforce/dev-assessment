@@ -1,11 +1,12 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { encodeDefaultFieldValues } from 'lightning/pageReferenceUtils';
+import { CloseActionScreenEvent } from 'lightning/actions';
 
 import getDirectOrIndirectlyContacts from '@salesforce/apex/ContactController.getDirectOrIndirectlyContacts';
 
 const columns = [
-    { label: 'Name', fieldName: 'Name', type: 'button', typeAttributes:{label:{fieldName:'Name'},variant:'base'}},
+    { label: 'Name', type: 'button', typeAttributes: { label: { fieldName: 'Name' }, variant: 'base'}},
     { label: 'Email', fieldName: 'Email', type: 'email'},
     { label: 'Phone', fieldName: 'Phone', type: 'phone'},
 ];
@@ -16,8 +17,8 @@ export default class ContactSearch extends NavigationMixin(LightningElement) {
     initialContacts;
     error;
     columns=columns;
-    showDetails = false;
     contactDetails;
+    searchString;
 
     @wire(getDirectOrIndirectlyContacts, { accountId: '$recordId' })
     wiredContacts({error, data}) {
@@ -32,29 +33,18 @@ export default class ContactSearch extends NavigationMixin(LightningElement) {
         }
     };
 
-    handleRowAction(event) {
-        //console.log(this.initialContacts);
-        this.showDetails = true;
+    handleRowAction (event) {
         this.contactDetails = {...event.detail.row};
     }
 
-    handleEnter (event) {
-        if (event.keyCode === 13) {
-            this.searchContact(event.target.value);
-        }
+    handleSearch (event) {
+        if (event.keyCode === 13 || event.target.dataset.name === 'searchButton') this.searchContact(this.searchString);
     }
 
-    handleSearchClick (event) {
-        console.log(event.target.id);
-    }
-
-    handleCreate (event) {
-        alert("Pressed");
+    handleCreate () {
         const defaultValues = encodeDefaultFieldValues({
             AccountId: this.recordId
         });
-
-        console.log(defaultValues);
 
         this[NavigationMixin.Navigate]({
             type: 'standard__objectPage',
@@ -68,6 +58,7 @@ export default class ContactSearch extends NavigationMixin(LightningElement) {
         });
     }
 
+    // Search function using filter with regex expression wih 'gi' modifier (ignores case & match all instances)
     searchContact (searchText) {
         let regex = new RegExp(searchText,'gi');
         this.contacts = this.initialContacts.filter(
@@ -75,11 +66,15 @@ export default class ContactSearch extends NavigationMixin(LightningElement) {
         );
     }
 
+    handleClose() {
+        this.dispatchEvent(new CloseActionScreenEvent());
+    }
 
-    handleSearch(event) {
-        let charCount = event.target.value.length;
+    handleChange (event) {
+        this.searchString = event.target.value;
+        let charCount = this.searchString.length;
         if (charCount === 3) {
-            this.searchContact(event.target.value);
+            this.searchContact(this.searchString);
         } else if (charCount < 3) {
             this.contacts = this.initialContacts;
         }
