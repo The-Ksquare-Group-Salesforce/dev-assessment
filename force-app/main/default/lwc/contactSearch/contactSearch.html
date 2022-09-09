@@ -1,0 +1,54 @@
+<template>
+    <lightning-card>
+        <div class="slds-m-horizontal_large">
+            <h1 class="slds-text-heading_large slds-border_bottom slds-p-bottom_medium">Contact Search</h1>
+            <div style="height:52px;" class="slds-grid slds-m-top_medium">
+                <div style="position: relative;" class="slds-col slds-size_1-of-12">
+                    <span style="position: absolute; bottom: 15%;">
+                        Contact Name
+                    </span>
+                </div>
+                <div class="slds-col slds-size_2-of-12">
+                    <lightning-input 
+                        type="search" 
+                        onchange={handleSearch} 
+                        onkeypress={handleEnter}>
+                    </lightning-input>
+                </div>
+                <div style="position: relative;" class="slds-col slds-size_2-of-12">
+                    <span style="position: absolute; bottom: 0;" >
+                        <lightning-button variant="brand" id="searchButton" label="Search" onclick={handleSearchClick} class="slds-m-left_x-small"></lightning-button>
+                    </span>
+                </div>
+            </div>
+            <div style="height:300px; border:1px solid;" class="slds-grid slds-m-top_large">
+                <div class="slds-col slds-size_9-of-12" style="padding: 0;">
+                    <lightning-datatable 
+                        key-field="Id"
+                        data={contacts}
+                        columns={columns}
+                        hide-checkbox-column="true"
+                        resize-column-disabled
+                        onrowaction={handleRowAction}>
+                    </lightning-datatable>
+                </div>
+                <div if:true={showDetails} class="slds-col slds-size_3-of-12" style="padding: 0;">
+                    <h1>{contactDetails.Name}</h1>
+                    <h1>{contactDetails.Title}</h1>
+                    <h1>{contactDetails.Phone}</h1>
+                    <h1>{contactDetails.Email}</h1>
+                </div>
+            </div>
+            <div class="slds-grid slds-grid_align-spread slds-border_top slds-m-top_medium slds-p-top_medium">
+                <div class="slds-col">
+                    <lightning-button variant="brand-outline" label="Close" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+                </div>
+                <div class="slds-col">
+                    <lightning-button variant="brand" label="Create New" onclick={handleCreate} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </div>
+        </div>
+        
+    </lightning-card>
+    
+</template>
