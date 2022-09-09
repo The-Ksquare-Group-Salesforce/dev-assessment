@@ -41,6 +41,17 @@ export default class ContactSearch extends NavigationMixin(LightningElement) {
         if (event.keyCode === 13 || event.target.dataset.name === 'searchButton') this.searchContact(this.searchString);
     }
 
+    handleClick () {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: this.contactDetails.Id,
+                objectApiName: 'Contact',
+                actionName: 'view',
+            }
+        });
+    }
+
     handleCreate () {
         const defaultValues = encodeDefaultFieldValues({
             AccountId: this.recordId

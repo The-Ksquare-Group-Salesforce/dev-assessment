@@ -36,7 +36,7 @@
                     </lightning-datatable>
                 </div>
                 <div if:true={contactDetails} class="contact slds-col slds-size_3-of-12">
-                    <img src="https://assets-global.website-files.com/5a690960b80baa0001e05b0f/5bb25c47222db17fe0c2d846_John-headshot.png" alt="Contact image" height="100px" width="100px">
+                    <img src="https://assets-global.website-files.com/5a690960b80baa0001e05b0f/5bb25c47222db17fe0c2d846_John-headshot.png" onclick={handleClick} role="button" alt="Contact image" height="100px" width="100px">
                     <h1>{contactDetails.Name}</h1>
                     <h1>{contactDetails.Title}</h1>
                     <p><lightning-formatted-phone value={contactDetails.Phone}></lightning-formatted-phone></p>
