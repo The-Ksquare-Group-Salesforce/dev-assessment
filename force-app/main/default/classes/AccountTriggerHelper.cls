@@ -24,10 +24,22 @@ public class AccountTriggerHelper {
             for(Contact contact : contactList) {        
                 contact.Push_Date__c = pushDate;	// Update Push_Date__c field
             }
-            try {
-                update contactList;
-            } catch(Exception e) {
-                System.debug(e);
+            Database.SaveResult[] srList = Database.update(contactList, false);
+
+            // Iterate through each returned result
+            for (Database.SaveResult sr : srList) {
+                if (sr.isSuccess()) {
+                    // Operation was successful
+                    System.debug('Successfully inserted account. Account ID: ' + sr.getId());
+                }
+                else {
+                    // Operation failed                
+                    for (Database.Error err : sr.getErrors()) {
+                        System.debug('The following error has occurred.');                    
+                        System.debug(err.getStatusCode() + ': ' + err.getMessage());
+                        System.debug('Account fields that affected this error: ' + err.getFields());
+                    }
+                }
             }
         }
     }
