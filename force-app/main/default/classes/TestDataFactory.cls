@@ -1,4 +1,4 @@
-public with sharing class Test_DataFactory {
+public with sharing class TestDataFactory {
     public static void initData(Integer accounts, Integer contacts) {
         List<Account> accs = new List<Account>();
         for(Integer i = 0; i < accounts; i++) {

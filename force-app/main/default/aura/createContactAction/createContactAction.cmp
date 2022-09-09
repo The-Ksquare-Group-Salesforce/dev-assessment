@@ -1,0 +1,4 @@
+<aura:component implements="flexipage:availableForRecordHome" description="My Lightning Component">
+    <lightning:quickActionAPI aura:id="quickActionAPI" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+</aura:component>

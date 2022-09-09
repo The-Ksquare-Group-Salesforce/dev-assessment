@@ -1,0 +1,7 @@
+.img-mask{
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    line-height: 0;
+    position: relative;
+  }

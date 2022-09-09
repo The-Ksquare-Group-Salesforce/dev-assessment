@@ -1,0 +1,88 @@
+<template>
+    <lightning-card>
+        <h1 slot="title">
+            Contact Search
+        </h1>
+        <lightning-layout>
+            <lightning-layout-item size="12" padding="around-small" vertical-align = "end">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item padding="around-small" vertical-align = "end">
+                        <p><strong> Contact Name </strong></p>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" vertical-align = "end">
+                        <lightning-input variant = "label-hidden" type="search" placeholder="Search" value={key} onchange={handleKeyChange} onkeypress={handleKeyPressed}> </lightning-input>
+                    </lightning-layout-item> 
+                    <lightning-layout-item padding="around-small" vertical-align = "end">
+                        <lightning-button label="Search" onclick={handleSearch} variant="brand"></lightning-button>
+                    </lightning-layout-item>
+                   <lightning-layout-item size="9" padding="around-small">
+                        <div class="slds-p-around_x-small slds-grid slds-wrap slds-size_12-of-12">
+                            <table class="slds-table ">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="slds-size_1-of-12" scope="col">
+                                            <div class="slds-truncate slds-align_absolute-center"  title='Name'>Name</div>
+                                        </th>
+                                        <th class="slds-size_4-of-12" scope="col">
+                                            <div class="slds-truncate slds-align_absolute-center" title="Email">Email</div>
+                                        </th>
+                                        <th  class="slds-size_1-of-12"  scope="col">
+                                            <div class="slds-truncate slds-align_absolute-center" title="Phone">Phone</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={contacts} for:item="con">
+                                        <tr  key={con.Id} class="slds-hint-parent" >
+                                            <th class="slds-size_4-of-12" scope="col">
+                                                <div class="slds-truncate slds-align_absolute-center" >
+                                                    <a data-id={con.Id} onclick={showContactCard}>{con.Name}</a>
+                                                </div>
+                                            </th>
+                                            <th class="slds-size_4-of-12" scope="col">
+                                                <div class="slds-truncate slds-align_absolute-center" >
+                                                    <lightning-formatted-email
+                                                    type="text"
+                                                        value={con.Email}
+                                                        variant = "label-hidden"         
+                                                        data-field="Email" 
+                                                        >
+                                                    </lightning-formatted-email>
+                                                </div>
+                                            </th>                    
+                                            <th class="slds-size_4-of-12 " scope="col">
+                                                <div class="slds-truncate slds-align_absolute-center" >
+                                                    <lightning-formatted-text 
+                                                        read-only
+                                                        data-field="Phone" 
+                                                        value={con.Phone}
+                                                        variant = "label-hidden"    
+                                                        >
+                                                    </lightning-formatted-text >   
+                                                </div>
+                                            </th>
+                                        </tr>                            
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="3" padding="around-small" vertical-align = "end">
+                        <template if:true={contactCard}>
+                            <c-contact-card contactinfo={contactInfo}></c-contact-card>
+                        </template>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-layout-item>
+            
+        </lightning-layout>
+        <div slot="footer">
+            <lightning-layout-item size="6" padding="around-large">
+                <lightning-button style="float:left;" label="Close" onclick={closeSearch} variant="brand-outline"></lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" padding="around-large">
+                <lightning-button style="float:right;" label="Create New" onclick={navigateToCreateContact} variant="brand"></lightning-button>
+            </lightning-layout-item>
+        </div>  
+    </lightning-card>
+</template>

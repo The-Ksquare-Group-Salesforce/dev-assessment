@@ -3,7 +3,7 @@ private class Test_AccountTriggerHandler{
         
     @isTest
     static void contactTrigger_LessThan200Test(){
-        Test_DataFactory.initData(2, 10);
+        TestDataFactory.initData(2, 10);
         Map<Id, Account> accMap = new Map<Id, Account>([SELECT Id, PushToVendor__c 
                                                        FROM Account]);
         for(Account acc:accMap.values()){
@@ -29,7 +29,7 @@ private class Test_AccountTriggerHandler{
     
     @isTest
     static void contactTrigger_Between200_1000Test(){
-        Test_DataFactory.initData(2, 220);
+        TestDataFactory.initData(2, 220);
         Map<Id, Account> accMap = new Map<Id, Account>([SELECT Id, PushToVendor__c 
                                                        FROM Account 
                                                         WHERE PushToVendor__c = 'NO']);
@@ -56,7 +56,7 @@ private class Test_AccountTriggerHandler{
     
     @isTest
     static void contactTrigger_Over1000Test(){
-        Test_DataFactory.initData(2, 510);
+        TestDataFactory.initData(2, 510);
         Map<Id, Account> accMap = new Map<Id, Account>([SELECT Id, PushToVendor__c 
                                                        FROM Account 
                                                         WHERE PushToVendor__c = 'NO']);
@@ -86,7 +86,7 @@ private class Test_AccountTriggerHandler{
     
     @isTest
     static void updateContactListTest_Yes(){
-        Test_DataFactory.initData(2, 10);
+        TestDataFactory.initData(2, 10);
 
      	List<Contact> contactList = [SELECT Id, Push_Date__c, Account.PushToVendor__c
                                      FROM Contact 
@@ -101,7 +101,7 @@ private class Test_AccountTriggerHandler{
     
     @isTest
     static void updateContactListTest_No(){
-        Test_DataFactory.initData(2, 10);
+        TestDataFactory.initData(2, 10);
 
      	List<Contact> contactList = [SELECT Id, Push_Date__c, Account.PushToVendor__c
                                      FROM Contact 

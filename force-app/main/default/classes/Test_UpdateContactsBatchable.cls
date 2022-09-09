@@ -2,7 +2,7 @@
 private with sharing class Test_UpdateContactsBatchable {
     @isTest
     static void updateContactsBatchableOverTest() {
-        Test_DataFactory.initData(2, 20);
+        TestDataFactory.initData(2, 20);
         List<Contact> contactList = [SELECT Id, Push_Date__c, Account.PushToVendor__c
                                      FROM Contact 
                                      WHERE Account.PushToVendor__c = 'YES'];
