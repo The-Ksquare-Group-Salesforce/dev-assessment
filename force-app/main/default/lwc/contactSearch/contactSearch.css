@@ -1,0 +1,29 @@
+.contact {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.topContainer {
+    height: 52px;
+}
+
+.topContainer > div {
+    position: relative;
+}
+
+.topContainer > div span {
+    position: absolute;
+}
+
+.bottomContainer {
+    height: 300px; 
+    border: 1px solid;
+}
+
+.bottomContainer div {
+    padding: 0;
+}
