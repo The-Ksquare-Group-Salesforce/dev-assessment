@@ -7,7 +7,7 @@ private with sharing class Test_TestDataFactory {
         Test.stopTest();
         Integer accounts = [SELECT count() FROM Account];
         Integer contacts = [SELECT count() FROM Contact];
-        system.assertEquals(5, accounts);
-        system.assertEquals(50, contacts);
+        system.assertEquals(10, accounts);
+        system.assertEquals(100, contacts);
     }
 }
