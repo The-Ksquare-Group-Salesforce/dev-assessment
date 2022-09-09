@@ -41,12 +41,20 @@
         <name>CustomField</name>
     </types>
     <types>
+        <members>User.Assessment_Complete__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
         <members>Account.Contact_Search</members>
         <name>QuickAction</name>
     </types>
     <types>
         <members>Account-Account Layout</members>
         <name>Layout</name>
+    </types>
+    <types>
+        <members>Send_Assessment_Completed_Email_Notification</members>
+        <name>Flow</name>
     </types>
     <version>55.0</version>
 </Package>
