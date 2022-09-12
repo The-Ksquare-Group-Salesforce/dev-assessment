@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Contact Search" style="padding: 10px">
+        <div style="padding: 10px">
+            <label>Contact Name</label>
+        <lightning-input type="search" onchange={searchOnChange} value={nameFilter} ></lightning-input>
+        <br/>
+        <div style="height: 300px;">
+            <lightning-datatable
+                    key-field="id"
+                    data={contacts}
+                    columns={columns}>
+            </lightning-datatable>
+        </div>
+        </div>      
+    </lightning-card>
+</template>
