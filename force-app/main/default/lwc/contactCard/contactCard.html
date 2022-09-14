@@ -1,0 +1,9 @@
+<template>
+    <lightning-card>
+        <input class="img-mask" onclick={handleContact} type="image" src={profilePicture} />
+        <p><lightning-formatted-text value={contactinfo.Name} ></lightning-formatted-text></p>
+        <p><lightning-formatted-text value={contactinfo.Title}></lightning-formatted-text></p>
+        <p><lightning-formatted-phone value={contactinfo.Phone} linkify></lightning-formatted-phone></p>
+        <p><lightning-formatted-email value={contactinfo.Email}></lightning-formatted-email></p>
+    </lightning-card>
+</template>
