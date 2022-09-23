@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template notifying the assesment has been completed.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Assesment Complete</name>
+    <style>none</style>
+    <subject>Done!</subject>
+    <textOnly>Hi {!User.Name}!
+Before anything, I would like to apologize for the extreme delay in the submission of the assessment. To be totally honest when I finished it, I forgot to do the final steps.
+The assessment was completed on Saturday the 10th. It took me around 35-40 hours.
+The url for the GIT repository is here.
+Kind regards, Carlos Alvarado</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

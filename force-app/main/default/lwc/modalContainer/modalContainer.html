@@ -1,0 +1,50 @@
+<template>
+    <template if:true={showThisModal}>
+        <section
+            role="dialog"
+            tabindex="-1"
+            aria-labelledby="modal-heading-01"
+            aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open"
+        >
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon class="slds-modal__close"
+                    title="Close"
+                    icon-name="utility:close"
+                    icon-class="slds-button_icon-inverse"
+                    onclick={handleCloseModal}
+                    >
+                    </lightning-button-icon>
+    
+                    <h2 class="slds-text-heading_large slds-text-align_left">
+                        Contact Search
+                    </h2>
+                </header>
+                <div id="contactsTable" class="slds-modal__content slds-p-right_x-small slds-p-left_medium">
+                    <c-contacts-from-account accountid={accountid}></c-contacts-from-account>
+                </div>
+                <div id="insertContact">
+                    <slot name="insertContact">
+                        <c-modal-for-new-contact accountid={accountid} onpassrefresh={refreshContacts}></c-modal-for-new-contact>
+                    </slot>
+                </div>
+  
+                <footer class="slds-modal__footer">
+                    <div class="slds-float_left">
+                        <lightning-button label="Close" title="Close" 
+                                      onclick={handleCloseModal}>
+                        </lightning-button>
+                    </div>
+                    <div class="slds-float_right">
+                        <lightning-button label="Create New" title="Create New" 
+                                          variant="brand" onclick={handleShowModal}>
+                        </lightning-button>
+                    </div>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
