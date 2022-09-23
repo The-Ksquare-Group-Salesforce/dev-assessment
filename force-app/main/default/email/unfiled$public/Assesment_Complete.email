@@ -1,0 +1,101 @@
+<body style="margin: 0; padding: 0">
+    <table
+      role="presentation"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      width="100%"
+    >
+        <tr>
+            <td style="padding: 20px 0 30px 0">
+                <table
+                align="center"
+                border="0"
+                cellpadding="0"
+                cellspacing="0"
+                width="600"
+                style="border-collapse: collapse; border: 1px solid #ffffff"
+                >
+
+                    <tr>
+                        <td bgcolor="#ffffff" style="padding: 3.5rem 0 3rem 0">
+                            <table class="Body"
+                            border="0"
+                            cellpadding="0"
+                            cellspacing="0"
+                            width="100%"
+                            style="border-collapse: collapse"
+                            >
+                            
+                                <tr class="introductuction">
+                                <td style="color: #080707; font-family: Arial, sans-serif">
+                                    <h1
+                                    style="
+                                    font-size: 16px;
+                                    margin-bottom: 12px;
+                                    text-align: Left;
+                                    font-weight: normal;"
+                                    >
+                                        Hi {!User.Name}!
+                                    </h1>
+                                </td>
+                                </tr>
+                            
+                                <tr>
+                                <td
+                                align="center"
+                                style="
+                                height: 16px;
+                                background: #ffffff;
+                                text-align: center;
+                                padding: 0 0 0 0;
+                                align-items: center;
+                                justify-content: space-evenly;
+                                flex-direction: column;"
+                                ></td>
+                                </tr>
+
+                                <tr></tr>
+                                <tr></tr>
+                            
+                                <tr class="bodyText">
+                                    <td style="color: #080707; font-family: Arial, sans-serif">
+                                        <h1
+                                        style="
+                                        font-size: 16px;
+                                        margin: 0rem 0 2rem 0;
+                                        text-align: Left;
+                                        font-weight: normal;"
+                                        >
+                                        Before anything, I would like to apologize for the extreme delay in 
+                                        the submission of the assessment. To be totally honest when I finished it, I forgot
+                                        to do the final steps. 
+                                        <br></br>
+                                        The assessment was completed on Saturday the 10th. It took me around 35-40 hours. 
+                                        <br></br>
+                                        The url for the GIT repository is <a href="https://github.com/CKY0-A/solution-CarlosAlvarado" target="_blank">here.</a>
+                                        </h1>
+                                    </td>
+                                </tr>
+                            
+                                <tr class="Goodbye">
+                                    <td style="color: #080707; font-family: Arial, sans-serif">
+                                        <h1
+                                        style="
+                                        font-size: 16px;
+                                        margin: 0 0 0 0;
+                                        text-align: Left;
+                                        font-weight: normal;"
+                                        >
+                                            Kind regards, Carlos Alvarado
+                                        </h1>
+                                     </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>

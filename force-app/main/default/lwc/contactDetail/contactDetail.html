@@ -1,0 +1,23 @@
+<template>
+    <div class="detailPage">
+        <template if:true={contact.data}>
+            <a href={contURL}>
+                <img src={photoURL} label="Profile Picture">
+            </a>
+            <div class="slds-text-heading_small slds-p-top_x-small">
+                <div class="slds-p-bottom_x-small">
+                    {name}
+                </div>
+                <div class="slds-p-bottom_x-small">
+                    {title}
+                </div>
+                <div class="slds-p-bottom_x-small">
+                    <lightning-formatted-phone value={phone}></lightning-formatted-phone>
+                </div>
+                <div class="slds-hyphenate slds-p-bottom_x-small">
+                    <lightning-formatted-email value={email} hide-icon></lightning-formatted-email>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

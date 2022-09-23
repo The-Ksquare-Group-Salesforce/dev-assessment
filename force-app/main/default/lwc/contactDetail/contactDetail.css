@@ -1,0 +1,9 @@
+.detailPage{
+    height: 22vh;
+}
+
+img {
+    height: 30%;
+    width: 35%;
+    border-radius: 50%;
+}

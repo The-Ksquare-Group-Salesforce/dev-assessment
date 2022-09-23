@@ -1,0 +1,36 @@
+<template>
+    <div id="Lookup" class="slds-p-bottom_small">
+        <c-contact-search accountid={accountid} onsendcontid={handleSearchedContact}></c-contact-search>
+    </div>
+    <div class="slds-grid slds-wrap">
+        <div id="dataTable" class="slds-size_4-of-6 slds-table_striped slds-table_bordered slds-table_col-bordered">
+                <template if:true={data}>
+                    <lightning-datatable
+                        key-field="id"
+                        data={data}
+                        columns={columns}
+                        onrowaction={handleRowAction}
+                        hide-checkbox-column="true">
+                    </lightning-datatable>
+                </template>
+        </div>
+        <div id="contactDisplay" class="slds-size_2-of-6 slds-p-around_small">
+            <template if:true={clickOnName}>
+                <c-contact-detail contactid={contactIdToDisplay}></c-contact-detail>
+            </template>
+        </div>
+    </div>
+    <lightning-layout horizontal-align="space" class="slds-p-around_small">
+            <lightning-layout-item flexibility="auto">
+                <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={previousHandler}>
+                </lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto">
+                Page {page} of {totalPage}
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto">
+                <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right"
+                    onclick={nextHandler}></lightning-button>
+            </lightning-layout-item>
+    </lightning-layout>
+</template>
