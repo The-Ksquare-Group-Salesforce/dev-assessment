@@ -1,0 +1,108 @@
+<template>
+    <lightning-layout horizontal-align="space">
+        <lightning-layout-item size="9" >
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_8-of-12 slds-m-bottom--medium">
+                    <lightning-Input type="search" placeholder="Search..." onchange={handleSearchTermChange} onkeyup={handleAutomaticSearch} value={searchTerm} name="contactName" class="contactName"></lightning-input>                 
+                 </div>
+                 <div class="slds-col slds-size_3-of-12 slds-m-top--medium search">                 
+                        <lightning-button label="Search" size="small" variant="brand" onclick={getContacts} icon-name="utility:search" icon-position="right"></lightning-button>
+                 </div>
+            </div>
+            <div class="slds-box slds-theme_default">
+                <div class="slds-is-relative" if:true={loader}>
+                    <lightning-spinner alternative-text="Loading..." size="large"></lightning-spinner>
+                </div>
+                <lightning-card  title="Contacts">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <thead>
+                            <tr class="slds-line-height_reset slds-text-title_caps">
+                                <th class="slds-is-resizable" scope="col">
+                                    <div class="slds-truncate" title="Name">
+                                        Name
+                                    </div>
+                                </th>
+                                <th class="slds-is-resizable" scope="col">
+                                    <div class="slds-truncate" title="E-mail">
+                                       E-mail
+                                    </div>
+                                </th>
+                                <th  class="slds-is-resizable" scope="col">
+                                    <div class="slds-truncate" title="Phone">
+                                        Phone
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template if:true={contacts}>
+                                <template for:each={contacts} for:item="con">
+                                    <tr key={con.Id} data-id={con.Id} class="cursor_pointer" onclick={handleContactSelected}>
+                                        <th scope="row" data-label="Name">
+                                            <div class="slds-truncate" title={con.FirstName}>{con.Name}</div>
+                                        </th>
+                                        <th scope="row" data-label="LastName">
+                                            <div class="slds-truncate" title={con.LastName}>{con.Email}</div>
+                                        </th>
+                                        <th scope="row" data-label="Phone">
+                                            <template if:true={con.Phone}>
+                                            <div class="slds-truncate" title={con.Phone}>{con.Phone}</div>
+                                        </template>
+                                        </th>
+                                    </tr>
+                                </template>
+                            </template>
+                        </tbody>
+                    </table>
+                    <template if:true={isDisplayNoRecords}>
+                        <div class="slds-align_absolute-center">
+                            <br/>
+                            No records found
+                        </div>
+                    </template>
+                    <br/>
+                    <div class="slds-align_absolute-center"> 
+                        <div class="slds-p-right_xx-small">
+                            <lightning-button
+                            name="Close-"
+                            label="Close"
+                            class="slds-m-around_medium"
+                            onclick={closeQuickAction}
+                            ></lightning-button>
+
+                            <lightning-button label="Prev"
+                            disabled={isPrev} onclick={handlePrev}
+                            variant="brand"
+                            icon-name="utility:back"
+                            name="prev"></lightning-button>  
+                        </div>
+                        <span class="slds-badge slds-badge_lightest">
+                            {recordStart}-{recordEnd} of {totalRecords} | Page {pageNumber} of {totalPages}
+                        </span>
+                        <div class="slds-p-left_xx-small">
+                            <lightning-button label="Next"
+                            disabled={isNext} 
+                            onclick={handleNext}
+                            variant="brand"
+                            icon-name="utility:forward"
+                            icon-position="right"
+                            name="next">
+                            </lightning-button>
+
+                            <lightning-button
+                            name="new-with-defaults"
+                            label="Create New"
+                            class="slds-m-around_medium"
+                            onclick={navigateToNewContactWithDefaults}
+                            ></lightning-button>
+                        </div>
+                    </div>  
+                </lightning-card>
+            </div>
+            
+        </lightning-layout-item>
+        <lightning-layout-item size="3">
+            <c-contact-card contact={currentSelectedContact}></c-contact-card>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
