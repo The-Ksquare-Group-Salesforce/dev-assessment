@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Assessment_Complete__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Stores the status of the assessment.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Mark this field whrn the assessment is completed.</inlineHelpText>
+    <label>Assessment Complete</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>
