@@ -1,0 +1,28 @@
+<template>
+    <div class="custom-box">
+        <template if:false={isContactUndefined}>
+            <h1>No contact Selected</h1>
+        </template>
+        <template if:true={isContactUndefined}>
+            <ul>
+                <template if:true={isContactUrlImagePopulated}>
+                    <li>
+                        <img
+                        onclick={viewRecord}
+                        src={contact.Contact_Image__c} 
+                        alt="User Image" 
+                        height="100px" 
+                        width="100px"/>
+                    </li>
+                </template>
+                <template if:false={isContactUrlImagePopulated}>
+                    <li onclick={viewRecord}> <lightning-avatar size="large" variant="circle" src="https://www.lightningdesignsystem.com/assets/images/avatar2.jpg"></lightning-avatar></li>
+                </template>
+                <li>Name: {contact.Name}</li>
+                <li>Title: {contact.Title}</li>
+                <li>Phone: {contact.Phone}</li>
+                <li>E-mail: <a href={mailToAddress}>{contact.Email}</a></li>
+            </ul>
+        </template>
+    </div>
+</template>
