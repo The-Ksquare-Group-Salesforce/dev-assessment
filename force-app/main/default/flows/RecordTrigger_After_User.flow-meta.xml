@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Email_to_user</name>
+        <label>Send Email to user</label>
+        <locationX>198</locationX>
+        <locationY>695</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>EmailBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddressesArray</name>
+            <value>
+                <elementReference>EmailCollection</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Assement Completed</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <assignments>
+        <name>Add_User_s_Email_to_collection</name>
+        <label>Add User&apos;s Email to collection</label>
+        <locationX>198</locationX>
+        <locationY>575</locationY>
+        <assignmentItems>
+            <assignToReference>EmailCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_Email_to_user</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Assessment_Completed</name>
+        <label>Assessment Completed?</label>
+        <locationX>330</locationX>
+        <locationY>455</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Assessment_Complete__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_User_s_Email_to_collection</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Created_or_Updated</name>
+        <label>Created or Updated?</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Assessment_Completed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Updated</defaultConnectorLabel>
+        <rules>
+            <name>Created</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Created</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>ISNEW</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>RecordTrigger-After: User {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RecordTrigger-After: User</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Created_or_Updated</targetReference>
+        </connector>
+        <object>User</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>EmailBody</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;table cellspacing=&quot;0&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; width=&quot;100%&quot; bgcolor=&quot;#f2f3f8&quot;
+        style=&quot;@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: &apos;Open Sans&apos;, sans-serif;&quot;&gt;
+        &lt;tr&gt;
+            &lt;td&gt;
+                &lt;table style=&quot;background-color: #f2f3f8; max-width:670px;  margin:0 auto;&quot; width=&quot;100%&quot; border=&quot;0&quot;
+                    align=&quot;center&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;
+                    &lt;tr&gt;
+                        &lt;td style=&quot;height:80px;&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                   
+                    &lt;tr&gt;
+                        &lt;td&gt;
+                            &lt;table width=&quot;95%&quot; border=&quot;0&quot; align=&quot;center&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;
+                                style=&quot;max-width:670px;background:#fff; border-radius:3px; text-align:center;-webkit-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);-moz-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);box-shadow:0 6px 18px 0 rgba(0,0,0,.06);&quot;&gt;
+                                &lt;tr&gt;
+                                    &lt;td style=&quot;height:40px;&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                                &lt;/tr&gt;
+                                &lt;tr&gt;
+                                    &lt;td style=&quot;padding:0 35px;&quot;&gt;
+                                        &lt;h1 style=&quot;color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:&apos;Rubik&apos;,sans-serif;&quot;&gt; Mario&apos;s Assesment&lt;/h1&gt;
+                                        &lt;span
+                                            style=&quot;display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;&quot;&gt;&lt;/span&gt;
+                                        &lt;p style=&quot;color:#455056; font-size:15px;line-height:24px; margin:0;text-align:left&quot;&gt;
+                                            User: {!$User.Username}
+                                        &lt;/p&gt;&lt;br/&gt;
+                                        &lt;p style=&quot;color:#455056; font-size:15px;line-height:24px; margin:0;text-align:left&quot;&gt;
+                                            Owner: Mario Velazquez 
+                                        &lt;/p&gt;&lt;br/&gt;
+                                        &lt;p style=&quot;color:#455056; font-size:15px;line-height:24px; margin:0;text-align:left&quot;&gt;
+                                            Date Completed: {!$Flow.CurrentDate}
+                                        &lt;/p&gt;&lt;br/&gt;
+                                        &lt;p style=&quot;color:#455056; font-size:15px;line-height:24px; margin:0;text-align:left&quot;&gt;
+                                            Git URL : &lt;a href=&quot;https://github.com/MarioVelazquezksq/dev-assessment&quot;&gt;go to git&lt;/a&gt;
+                                        &lt;/p&gt;&lt;br/&gt;
+                                        &lt;p style=&quot;color:#455056; font-size:15px;line-height:24px; margin:0;text-align:left&quot;&gt; 
+                                            Time used: 30 hrs approx     
+                                        &lt;/p&gt;&lt;br/&gt;
+                                        
+                                    &lt;/td&gt;
+                                &lt;/tr&gt;
+                                &lt;tr&gt;
+                                    &lt;td style=&quot;height:40px;&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                                &lt;/tr&gt;
+                            &lt;/table&gt;
+                        &lt;/td&gt;
+                    &lt;tr&gt;
+                        &lt;td style=&quot;height:20px;&quot;&gt;&amp;nbsp;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/table&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/table&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>EmailCollection</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

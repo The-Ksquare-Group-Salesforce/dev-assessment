@@ -1,0 +1,54 @@
+<template> 
+    <lightning-quick-action-panel header="Contact Search">
+        <div class="slds-p-around_large">
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item padding="around-small" size="2">
+                    <div class="label-container">
+                        Contact Name:
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="4">
+                    <div>
+                        <lightning-input type="search" id="input" variant = "label-hidden" value={searchTerm} label="Contact Name" onchange={onChange}  placeholder={searchPlaceholder}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="2">
+                    <div>
+                        <lightning-button variant="brand" name="Search" label="Search" class="slds-m-left_x-small" onclick={searchContact}></lightning-button>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="8">
+                    <div class="data-table">
+                        <lightning-datatable key-field="Id"
+                                data={records}
+                                columns={columns}
+                                enable-infinite-loading
+                                onloadmore={loadMoreData}
+                                hide-checkbox-column="true"
+                                hide-row-number-column="true"
+                                onrowaction={viewRecord}>
+                        </lightning-datatable> 
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="4">
+                    <template if:true={showContactCard}>
+                        <div class="page-section">
+                            <img src={urlPhotoConctat} alt="" class="img"/>
+                            <lightning-record-view-form object-api-name={objectApiName} record-id={selectedContactId}>
+                                <lightning-output-field field-name="Name" variant = "label-hidden"></lightning-output-field>
+                                <lightning-output-field field-name="Title" variant = "label-hidden"></lightning-output-field>
+                                <lightning-output-field field-name="Phone" variant = "label-hidden"></lightning-output-field>
+                                <lightning-output-field field-name="Email" variant = "label-hidden"></lightning-output-field>
+                            </lightning-record-view-form>
+                        </div>
+                    </template>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+
+        <div slot="footer">
+            <lightning-button variant="neutral" label="Close" onclick={closeModal} class="slds-float_left"></lightning-button>
+            <lightning-button variant="brand" name="Create New" label="Create New" class="slds-m-left_x-small" onclick={navigateToNewContact}></lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+</template>
