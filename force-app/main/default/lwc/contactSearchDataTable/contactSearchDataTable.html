@@ -1,0 +1,7 @@
+<template>
+    <div class="slds-var-p-around_small" style="height: 400px;">
+        <lightning-datatable key-field="Id" data={data} columns={columns} load-more-offset="20"
+            onloadmore={handleLoadMore} enable-infinite-loading hide-checkbox-column show-row-number-column>
+        </lightning-datatable>
+    </div>
+</template>
